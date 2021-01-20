@@ -1,0 +1,59 @@
+- content_for :body_class, "layout-boxed"
+
+-# if current_person.id == params[:person_id].to_i
+- if false
+
+  - content_for :page_title do
+    %h4
+      %i.icon-arrow-left52.position-left
+      %span.text-semibold
+        - if current_person.first_name.present?
+          = "#{current_person.first_name} #{current_person.last_name}"
+        - else
+          = current_person.username
+      \-
+      List of Businesses
+
+  - content_for :group_button do
+    .heading-btn-group
+      = link_to new_person_deposit_path(current_person), class: "btn btn-link btn-float has-text" do
+        %i.icon-database-insert.text-primary
+        %span Deposit
+
+      = link_to new_person_withdraw_path(current_person), class: "btn btn-link btn-float has-text" do
+        %i.icon-database-export.text-primary
+        %span Withdraw
+- else
+  - content_for :page_title do
+    %h4
+      %i.icon-arrow-left52.position-left
+      %span.text-semibold List of Businesses
+
+-if @businesses.present?
+  .row
+    - @businesses.each do |business|
+      .col-lg-3
+        .thumbnail
+          .thumb.thumb-rounded
+            - if business.logo.present?
+              = image_tag business.logo
+            - else
+              = image_tag "default_business_logo.png"
+            .caption-overflow
+              %span
+                = link_to business, class: "btn bg-success-400 btn-icon btn-xs" do
+                  %i.icon-link
+          .caption.text-center
+            %h6.text-semibold.no-margin
+              = truncate(business.name, :length => 20)
+              %small.display-block
+                Own by
+                = business.person.full_name
+
+  .row
+    .col-md-12
+      .panel.panel-body.border-top-teal.text-center
+        = will_paginate(@businesses)
+
+- else
+  %h1 Business not found

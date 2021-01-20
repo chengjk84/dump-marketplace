@@ -1,0 +1,120 @@
+- content_for :body_class, "layout-boxed"
+
+= render partial: "cover"
+
+.row
+  .col-lg-12
+
+    .tab-content
+      #home.tab-pane.active
+        - if @products.present?
+          - @products.each do |product|
+            .col-md-3
+              .thumbnail
+                .thumb
+                  - if product.image_01.present?
+                    = image_tag product.image_01
+                  - else
+                    = image_tag "default_product_image.png"
+                  .caption-overflow
+                    %span
+                      = link_to product, class: "btn btn-flat border-white text-white btn-rounded btn-icon" do
+                        %i.icon-link2
+
+                .caption.text-center
+                  %h6.text-semibold.no-margin= number_to_currency(product.price, unit: "RM", separator: ".", delimiter: ",", format: "%u %n")
+                  = link_to product do
+                    = truncate(product.name, :length => 14)
+
+                -# .panel-footer.panel-footer-transparent
+                -#   .heading-elements
+                -#     %a.heading-text.text-default{:href => "components_thumbnails.html#"}
+                -#       %i.icon-thumbs-up3.position-left
+                -#       38
+                -#     %a.heading-text.text-default.pull-right{:href => "components_thumbnails.html#"}
+                -#       %i.icon-eye8.position-left
+                -#       148
+        - else
+          %h1.text-light.text-center No featured product available!
+
+      #profile.tab-pane
+        .panel.panel-flat
+          .panel-heading
+            %h1.text-light.panel-title Business Profile
+          .panel-body
+            - if @business.about.present?
+              %h6.text-light= @business.about
+            - else
+              %h6.text-light= "No business information provided to display."
+
+      #contact.tab-pane
+        .panel.panel-flat
+          .panel-heading
+            %h1.text-light.panel-title Contact Information
+          .panel-body
+            - if @business.street_1.present? && @business.postcode.present? && @business.city.present? && @business.state.present? && @business.country.present? || @business.street_2.present?
+              %h6.text-light= "Address : #{@business.street_1}, #{@business.street_2}, #{@business.postcode} #{@business.city}, #{@business.state}, #{@business.country}"
+            - else
+              %h6.text-light= "Address : none"
+
+            - if @business.phone.present?
+              %h6.text-light= "Phone : #{@business.phone}"
+            - else
+              %h6.text-light= "Phone : none"
+
+            - if @business.fax.present?
+              %h6.text-light= "Fax : #{@business.fax}"
+            - else
+              %h6.text-light= "Fax : none"
+
+            - if @business.mobile.present?
+              %h6.text-light= "Mobile : #{@business.mobile}"
+            - else
+              %h6.text-light= "Mobile : none"
+
+            - if @business.email.present?
+              %h6.text-light= "Email : #{@business.email}"
+            - else
+              %h6.text-light= "Email : none"
+
+      #map.tab-pane
+        .panel.panel-flat
+          .panel-heading
+            %h1.text-light.panel-title Where we are!
+          .panel-body
+            - if @business.lng.present? && @business.lat.present?
+              %iframe.col-lg-12{:frameborder => "0", :height => "480", :marginheight => "0", :marginwidth => "0", :scrolling => "no", :src => "https://maps.google.com/maps?q=#{@business.lng},#{@business.lat}&hl=es;z=14&output=embed"}
+                %h6.text-light= "Failed to load Google Maps"
+            - else
+              %h6.text-light= "Coordinaate of longitude and latitude not provided to generate map."
+
+      #get-in-touch.tab-pane
+        .panel.panel-flat
+          .panel-heading
+            %h1.text-light.panel-title Get In Touch
+          .panel-body
+
+            - if current_person
+              = form_tag person_conversations_path(current_person) do
+                = hidden_field_tag :source, "get-in-touch"
+
+                .form-group
+                  %label From:
+                  = text_field_tag :person, current_person.full_name, placeholder: "Eg. John", readonly: "readonly", class: "form-control input-lg"
+                  = hidden_field_tag :person_id, current_person.id
+
+                .form-group
+                  %label To:
+                  = text_field_tag :business, @business.name, placeholder: "Eg. Doe", readonly: "readonly", class: "form-control input-lg"
+                  = hidden_field_tag :business_id, @business.id
+
+                .form-group
+                  %label Message:
+                  = text_area_tag :message_content, nil, size: "5x5", placeholder: "Enter your message here...", class: "form-control input-lg"
+
+                .text-right
+                  = button_tag type: "submit", class: "btn btn-primary btn-xlg" do
+                    Send Message
+
+            - else
+              %h6.text-light= "Please log in to get contact and send message to merchant."

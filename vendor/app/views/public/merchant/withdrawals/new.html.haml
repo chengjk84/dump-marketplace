@@ -1,0 +1,34 @@
+- content_for :body_class, "layout-boxed"
+
+- content_for :render_partial_sidebar do
+  = render partial: "layouts/shared/sidebar/merchant"
+
+%h1.text-light Merchant's Credit Withdrawals
+
+.row
+  .col-md-12
+    .panel.panel-default
+      .panel-heading
+        %h6.panel-title Request to withdraw credit
+
+      .panel-body
+
+        .alert.alert-warning.alert-bordered
+          Current withdrawable balance
+          = number_to_currency(( @bank.success + @bank.request ), unit: "RM", separator: ".", delimiter: ",", format: "%u %n")
+
+        = form_for @statement, url: business_merchant_withdrawals_path(@business, @statement) do |f|
+
+          .form-group
+            %label Payment Description:
+            = f.text_field :description, placeholder: "Eg. Withdraw RM1,000.00 credit", class: "form-control input-lg"
+
+          .form-group
+            %label Price
+            .input-group
+              %span.input-group-addon RM
+              = f.text_field :credit, placeholder: "0.00", class: "form-control input-lg"
+
+          .text-right
+            = f.button type: "submit", class: "btn btn-primary btn-xlg" do
+              Submit Request

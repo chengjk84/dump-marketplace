@@ -1,0 +1,73 @@
+- content_for :body_class, "layout-boxed"
+
+- content_for :render_partial_sidebar do
+  = render partial: "layouts/shared/sidebar/merchant"
+
+%h1.text-light Products Management
+
+.panel.panel-default
+  .panel-heading
+    %h6.panel-title List of Products
+    .heading-elements
+      = form_tag business_merchant_products_path, method: "get", class: "heading-form" do
+        .form-group.has-feedback
+          = text_field_tag :search, params[:search], placeholder: "Search by name", type: "search", class: "form-control"
+          .form-control-feedback
+            %i.icon-search4.text-size-base.text-muted
+
+      = link_to new_business_merchant_product_path(@business), class: "btn btn-primary btn-labeled heading-btn" do
+        %b
+          %i.icon-plus3
+        Add new product
+
+
+  -# .table-responsive
+  %table.table
+    %thead
+      %tr
+        %th Image
+        %th Name
+        %th Price
+        %th Stock
+        %th Featured
+        %th.text-center
+          %i.icon-menu
+
+    %tbody
+      - @products.each do |product|
+        %tr
+          %td
+            - if product.image_01.present?
+              = image_tag product.image_01, style: "width: 58px; height: 58px; border-radius: 2px;"
+            - else
+              = image_tag "default_product_image.png", style: "width: 58px; height: 58px; border-radius: 2px;"
+          %td= product.name
+          %td
+            - if product.price.present?
+              = number_to_currency(product.price, unit: "RM", separator: ".", delimiter: ",", format: "%u %n")
+            - else
+              = number_to_currency(0, unit: "RM", separator: ".", delimiter: ",", format: "%u %n")
+          %td
+            - if product.stock_in_hand.present?
+              = product.stock_in_hand
+            - else
+              .text-center -
+          %td.text-center
+            - if product.featured
+              %i.icon-clipboard2
+            - else
+              %i.icon-clipboard
+          %td.text-center
+            .btn-toolbar
+              .btn-group
+                = link_to edit_business_merchant_product_path(@business, product), class: "btn btn-primary heading-btn" do
+                  %i.icon-pencil5
+              .btn-group
+                = button_to business_merchant_product_path(@business, product), :confirm => "Are you sure you want to delete this product?", :method => :delete, class: "btn btn-danger heading-btn" do
+                  %i.icon-bin
+
+
+
+  .panel-footer
+    .heading-elements
+      = will_paginate @products

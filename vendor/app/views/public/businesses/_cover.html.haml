@@ -1,0 +1,66 @@
+.profile-cover
+
+  - if @business.banner.present?
+    .profile-cover-img{ style: "background-image: url(#{@business.banner})" }
+  - else
+    .profile-cover-img{ style: "background-image: url(#{image_url('default_business_banner.png')})" }
+
+  .media
+    .media-left
+      = link_to "", class: "profile-thumb" do
+        - if @business.logo.present?
+          = image_tag @business.logo, class: "img-circle"
+        - else
+          = image_tag "default_business_logo.png", class: "img-circle"
+          -# = image_tag "default_business_logo.png", class: "img-circle", alt: ""
+
+
+    .media-body
+      %h1
+        = @business.name
+        %small.display-block GST No.: 1234567890
+
+    .media-right
+      = link_to "", class: "profile-thumb" do
+        - if @business.qr_code.present?
+          = image_tag @business.qr_code
+        - else
+          = image_tag "default_business_logo.png"
+          -# = image_tag "default_business_logo.png", class: "img-circle", alt: ""
+
+.navbar.navbar-default.navbar-xs.navbar-component.no-border-radius-top
+  %ul.nav.navbar-nav.visible-xs-block
+    %li.full-width.text-center
+      %a{"data-target" => "#navbar-filter", "data-toggle" => "collapse"}
+        %i.icon-menu7
+
+  #navbar-filter.navbar-collapse.collapse
+    %ul.nav.navbar-nav
+      %li.active
+        = link_to business_path(@business) do
+          %i.icon-menu7.position-left
+          Home
+      %li
+        = link_to business_products_path(@business) do
+          %i.icon-calendar3.position-left
+          Products
+          %span.badge.badge-success.badge-inline.position-right= @business.products.count
+      %li
+        %a{"data-toggle" => "tab", :href => "#{business_path(@business)}#profile"}
+          %i.icon-store2.position-left
+          Profile
+      %li
+        %a{"data-toggle" => "tab", :href => "#{business_path(@business)}#contact"}
+          %i.icon-truck.position-left
+          Contact
+      %li
+        %a{"data-toggle" => "tab", :href => "#{business_path(@business)}#map"}
+          %i.icon-location4.position-left
+          Map
+
+    .navbar-right
+      %ul.nav.navbar-nav
+        %li
+          %a{"data-toggle" => "tab", :href => "#{business_path(@business)}#get-in-touch"}
+            %i.icon-stack-text.position-left
+            Get In Touch

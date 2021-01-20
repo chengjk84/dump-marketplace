@@ -1,0 +1,31 @@
+- content_for :body_class, "layout-boxed"
+
+- content_for :render_partial_sidebar do
+  = render partial: "layouts/shared/sidebar/people"
+
+.row
+  - if current_person.favorites.present?
+
+    %h1.text-light.text-center List of Favorite's Product!
+
+    - current_person.favorites.each do |favorite|
+      .col-md-3
+        .thumbnail
+          .thumb
+            - if favorite.product.image_01.present?
+              = image_tag favorite.product.image_01
+            - else
+              = image_tag "default_product_image.png"
+            .caption-overflow
+              %span
+                = link_to favorite.product, class: "btn btn-flat border-white text-white btn-rounded btn-icon" do
+                  %i.icon-link2
+
+          .caption.text-center
+            %h6.text-semibold.no-margin= number_to_currency(favorite.product.price, unit: "RM", separator: ".", delimiter: ",", format: "%u %n")
+            = link_to favorite.product do
+              = truncate(favorite.product.name, :length => 20)
+
+  - else
+
+    %h1.text-light.text-center No favorite's product marked

@@ -1,0 +1,49 @@
+.sidebar.sidebar-main.sidebar-default
+  .sidebar-content
+
+    .category-title.h6
+      %span Site's Management
+
+    .sidebar-category.sidebar-category-visible
+      .category-content.no-padding
+        %ul.navigation.navigation-main.navigation-accordion
+          %li.navigation-header
+            %span People
+            %i.icon-menu{:title => "People"}
+          %li
+            = link_to admin_people_path do
+              %i.icon-googleplus5
+              %span Wait for verification
+          %li
+            = link_to "" do
+              %i.icon-portfolio
+              %span unknown action
+          %li
+            = link_to "" do
+              %i.icon-portfolio
+              %span unknown action
+
+          %li.navigation-header
+            %span Businesses
+            %i.icon-menu{:title => "Merchants"}
+          %li
+            = link_to admin_businesses_verifications_path do
+              %i.icon-portfolio
+              %span Wait for verification
+          %li
+            = link_to "" do
+              %i.icon-portfolio
+              %span unknown action
+
+          %li.navigation-header
+            %span Others
+            %i.icon-menu{:title => "Others"}
+
+          %li
+            = link_to "" do
+              %i.icon-portfolio
+              %span unknown action
+          %li
+            = link_to "" do
+              %i.icon-portfolio
+              %span unknown action

@@ -1,0 +1,29 @@
+- content_for :body_class, "layout-boxed"
+
+.col-lg-3
+  = render partial: "layouts/shared/sidebar/search_people"
+.col-lg-9
+  -if @people.present?
+    - @people.each do |person|
+      .col-md-3
+        .thumbnail
+          .thumb
+            - if person.avatar.present?
+              = image_tag person.avatar
+            - else
+              = image_tag "default_person_avatar.png"
+            .caption-overflow
+              %span
+                - if current_person.friendships.find_by_friend_id(person).present?
+                  = button_to person_friendship_path(current_person, person), :method => :delete, class: "btn btn-flat border-white text-white btn-rounded btn-icon" do
+                    %i.icon-minus2
+                - else
+                  = button_to person_friendships_path(current_person, :friend_id => person), :method => :post, class: "btn btn-flat border-white text-white btn-rounded btn-icon" do
+                    %i.icon-plus2
+          .caption.text-center
+            .text-light.no-margin
+              = person.first_name
+
+    .col-md-12
+      .panel.panel-body.border-top-teal.text-center
+        = will_paginate(@people)

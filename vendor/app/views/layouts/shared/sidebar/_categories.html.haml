@@ -1,0 +1,30 @@
+.sidebar.sidebar-main.sidebar-default
+  .sidebar-content
+
+    .sidebar-category.sidebar-category-visible
+      .category-content
+        = form_tag products_path, method: "get", class: "heading-form" do
+          .form-group.has-feedback
+            = text_field_tag :search, params[:search], placeholder: "Search by name", type: "search", class: "form-control"
+            .form-control-feedback
+              %i.icon-search4.text-size-base.text-muted
+      %br
+      %br
+      .clearfix
+
+  .sidebar-content
+
+    .category-title.h6
+      %span Find by categories
+      %ul.icons-list
+        %li
+          = link_to "javascript:;" do
+            %i.icon-cogs
+
+    .sidebar-category.sidebar-category-visible
+      .category-content.no-padding
+        %ul.navigation.navigation-main.navigation-accordion
+          - navigate_by_category.each do |category|
+            %li
+              = link_to products_path(category_id: category) do
+                %span= category.name

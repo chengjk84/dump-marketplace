@@ -1,0 +1,46 @@
+- content_for :body_class, "layout-boxed"
+
+- content_for :render_partial_sidebar do
+  = render partial: "layouts/shared/sidebar/merchant"
+
+%h1.text-light Order Management
+
+.panel.panel-default
+  .panel-heading
+    %h6.panel-title List of Orders
+    .heading-elements
+      = form_tag business_merchant_orders_path, method: "get", class: "heading-form" do
+        .form-group.has-feedback
+          = text_field_tag :search, params[:search], placeholder: "Search by name", type: "search", class: "form-control"
+          .form-control-feedback
+            %i.icon-search4.text-size-base.text-muted
+
+      .clearfix
+
+  .table-responsive
+    %table.table
+      %thead
+        %tr
+          %th Order #
+          %th Customer Name
+          %th Total
+          %th Date
+          %th Status
+          %th.text-center{:style => "width: 30px;"}
+            %i.icon-menu
+
+      %tbody
+        - @orders.each do |order|
+          %tr
+            %td= "##{order.id}"
+            %td= order.person.full_name
+            %td= number_to_currency(order.total, unit: "RM", separator: ".", delimiter: ",", format: "%u %n")
+            %td= order.updated_at.strftime("%B %d, %Y")
+            %td= order.status.name
+            %td.text-center
+              = link_to business_merchant_order_path(order.business, order), class: "btn btn-primary btn-icon" do
+                %i.icon-file-text2
+
+  .panel-footer
+    .heading-elements
+      = will_paginate @orders

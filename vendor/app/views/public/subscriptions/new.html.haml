@@ -1,0 +1,28 @@
+- content_for :body_class, "layout-boxed"
+
+- content_for :render_partial_sidebar do
+  = render partial: "layouts/shared/sidebar/people"
+
+%h1.text-light Choose a Membership's Plan
+
+-if @plans.present?
+  .row
+    - @plans.each do |plan|
+      .col-lg-4
+        .thumbnail
+          .text-center
+            .icon-object.border-slate-300.text-slate-300
+              %i.icon-reading
+
+          .caption.text-center
+            %h4.text-semibold.no-margin
+              = plan.name
+              %small.display-block
+                Features
+
+          .content-divider.text-muted.form-group
+
+          .text-center
+            = button_to "Get #{plan.name}", person_subscriptions_path(plan_id: plan.id), class: "btn btn-primary", method: :post
+
+          %br

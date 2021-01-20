@@ -1,0 +1,22 @@
+- if current_person
+  %ul.nav.navbar-nav.navbar-right
+    %li.dropdown
+      = link_to "javascript:;", class: "dropdown-toggle", data: { toggle: "dropdown"} do
+        %i.icon-price-tag2.position-left
+        Membership
+        %span.label.label-inline.position-right.bg-slate-400= current_person.get_membership
+
+    %li.dropdown
+      = link_to "javascript:;", class: "dropdown-toggle", data: { toggle: "dropdown"} do
+        %i.icon-wallet
+        %span.visible-xs-inline-block.position-right Cash Management
+
+      %ul.dropdown-menu.dropdown-menu-right
+        %li
+          = link_to new_person_deposit_path(current_person) do
+            %i.icon-download
+            Top up
+        %li
+          = link_to new_person_withdraw_path(current_person) do
+            %i.icon-upload
+            Cash out

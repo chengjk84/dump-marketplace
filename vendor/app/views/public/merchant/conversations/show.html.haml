@@ -1,0 +1,96 @@
+- content_for :body_class, "layout-boxed"
+
+- content_for :render_partial_sidebar do
+  = render partial: "layouts/shared/sidebar/merchant"
+
+- if @conversations.present?
+  .col-lg-4
+    .panel.panel-flat
+      .panel-heading
+        %h6.panel-title People Contacts
+        .heading-elements
+          %span.badge.badge-success.heading-text= "Total: #{@conversations.count}"
+
+      %ul.media-list.media-list-linked.pb-5
+
+        - @conversations.each do |conversation|
+          %li.media
+            %a.media-link{:href => "/businesses/#{conversation.business.id}/merchant/conversations/#{conversation.id}"}
+              .media-left
+                - if conversation.person.avatar.present?
+                  = image_tag conversation.person.avatar, class: "img-circle"
+                - else
+                  = image_tag "default_business_logo.png", class: "img-circle"
+              .media-body
+                %span.media-heading.text-semibold= conversation.person.full_name
+                %span.media-annotation= conversation.person.email
+              .media-right.media-middle
+                - if conversation.person_response
+                  %span.status-mark.bg-success
+                - else
+                  %span.status-mark.bg-grey
+
+
+  .col-lg-8
+    / Main content
+    .content-wrapper
+      / Basic layout
+      .panel.panel-flat
+        .panel-heading
+          %h6.panel-title= @conversation.person.full_name
+          .heading-elements
+            %ul.icons-list
+              %li
+                %a{"data-action" => "close"}
+
+        .panel-body
+          - if @business.id == current_person.businesses.find(params[:id]).id
+            = form_tag business_merchant_conversations_path(@business) do
+              = hidden_field_tag :person_id, @conversation.person.id
+              = hidden_field_tag :business_id, @conversation.business.id
+
+              .form-group
+                %label Message:
+                = text_area_tag :message_content, nil, size: "5x5", placeholder: "Enter your message here...", class: "form-control input-lg"
+
+              .text-right
+                = button_tag type: "submit", class: "btn btn-primary btn-labeled btn-labeled-right" do
+                  %b
+                    %i.icon-circle-right2
+                  Send Message
+
+          %br
+
+          %ul.media-list.chat-list.chat-list-inverse.content-group
+            - @conversation.messages.reverse.each do |message|
+
+              - if message.remark == "person"
+                %li.media
+                  .media-left
+                    = link_to current_person do
+                      - if message.conversation.person.avatar.present?
+                        = image_tag "default_person_avatar.png", class: "img-circle"
+                      - else
+                        = image_tag "default_person_avatar.png", class: "img-circle"
+                  .media-body
+                    .media-content= message.content
+                    %span.media-annotation.display-block.mt-10
+                      = message.created_at
+
+              - elsif message.remark == "business"
+
+                %li.media.reversed
+                  .media-body
+                    .media-content= message.content
+                    %span.media-annotation.display-block.mt-10
+                      = message.created_at
+                  .media-right
+                    = link_to business_path(message.conversation.business) do
+                      - if message.conversation.business.logo.present?
+                        = image_tag message.conversation.business.logo, class: "img-circle"
+                      - else
+                        = image_tag "default_business_logo.png", class: "img-circle"
+
+
+- else
+  %h6.text-light= "No contact and conversations recorded."

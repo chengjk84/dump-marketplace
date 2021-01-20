@@ -1,0 +1,178 @@
+- content_for :body_class, "layout-boxed"
+
+- content_for :render_partial_sidebar do
+  = render partial: "layouts/shared/sidebar/people"
+
+.col-lg-8
+  = form_for @person, multipart: true do |f|
+    .panel.panel-flat
+      .panel-heading
+        %h2.panel-title Edit your profile
+
+      .panel-body
+
+        - if @person.errors.any?
+
+          .alert.alert-danger.no-border
+            %button.close{"data-dismiss" => "alert", :type => "button"}
+              %span ×
+              %span.sr-only Close
+            %span.text-semibold
+              = pluralize(@person.errors.count, "error")
+              prohibited this person from being saved:
+            %ul
+              - @person.errors.full_messages.each do |person|
+                %li= person
+
+        .form-group
+          %label First Name:
+          = f.text_field :first_name, placeholder: "John", class: "form-control input-lg"
+
+        .form-group
+          %label Last Name:
+          = f.text_field :last_name, placeholder: "Deo", class: "form-control input-lg"
+
+        .form-group.has-feedback.has-feedback-left
+          %label API Key:
+          = f.text_field :uuid, readonly: "readonly", class: "form-control input-lg"
+          .form-control-feedback
+            %i.icon-lock2
+
+        .form-group.has-feedback.has-feedback-left
+          %label Email:
+          = f.text_field :email, placeholder: "john.doe@example", class: "form-control input-lg"
+          .form-control-feedback
+            %i.icon-mention
+
+        .form-group.has-feedback.has-feedback-left
+          %label Mobile Phone:
+          = f.text_field :mobile, placeholder: "+60125254722", class: "form-control input-lg"
+          .form-control-feedback
+            %i.icon-phone2
+
+        .form-group
+          %label.display-block Gender:
+          = f.collection_select :gender_id, Gender.all, :id, :name, {}, {class: "select"}
+
+        .form-group
+          %label.text-semibold Your avatar:
+          .media.no-margin-top
+            .media-left
+              - if @person.avatar.present?
+                = image_tag @person.avatar, style: "width: 58px; height: 58px; border-radius: 2px;"
+              - else
+                = image_tag "default_person_avatar.png", style: "width: 58px; height: 58px; border-radius: 2px;"
+            .media-body
+              = f.file_field :avatar, class: "file-styled input-lg"
+              %span.help-block Accepted formats: png & jpg. Accepted dimension: 640 x 640.
+
+
+        .form-group.has-feedback.has-feedback-left
+          %label Street Line 1:
+          = f.text_field :street_1, placeholder: "Eg. No. 28, Jln. Raya II", class: "form-control input-lg"
+          .form-control-feedback
+            %i.icon-address-book
+
+        .form-group.has-feedback.has-feedback-left
+          %label Street Line 2:
+          = f.text_field :street_2, placeholder: "Eg. Tmn Bukit Raya", class: "form-control input-lg"
+          .form-control-feedback
+            %i.icon-address-book
+
+        .form-group.has-feedback.has-feedback-left
+          %label City:
+          = f.text_field :city, placeholder: "Eg. Setapak", class: "form-control input-lg"
+          .form-control-feedback
+            %i.icon-address-book
+
+        .form-group.has-feedback.has-feedback-left
+          %label Postcode:
+          = f.text_field :postcode, placeholder: "Eg. 53300", class: "form-control input-lg"
+          .form-control-feedback
+            %i.icon-address-book
+
+        .form-group.has-feedback.has-feedback-left
+          %label State:
+          = f.text_field :state, placeholder: "Eg. Kuala Lumpur", class: "form-control input-lg"
+          .form-control-feedback
+            %i.icon-address-book
+
+        .form-group.has-feedback.has-feedback-left
+          %label Country:
+          = f.text_field :country, placeholder: "Eg. Malaysia", class: "form-control input-lg"
+          .form-control-feedback
+            %i.icon-address-book
+
+
+        - if @person.verified_identification
+          %h3.text-light.text-success Verified identification
+        - else
+          %h3.text-light.text-warning Unverifited identification
+
+          .form-group.has-feedback.has-feedback-left
+            %label I/C or Passport No.:
+            = f.text_field :identification, placeholder: "Eg. 840326-09-5006", class: "form-control input-lg"
+            .form-control-feedback
+              %i.icon-address-book
+
+          .form-group
+            %label.text-semibold I/C or Passport Photocopy:
+            .media.no-margin-top
+              .media-left
+                - if @person.identification_photo.present?
+                  = image_tag @person.identification_photo, style: "width: 58px; height: 58px; border-radius: 2px;"
+                - else
+                  = image_tag "default_product_image.png", style: "width: 58px; height: 58px; border-radius: 2px;"
+              .media-body
+                = f.file_field :identification_photo, class: "file-styled input-lg"
+                %span.help-block Accepted formats: gif, png, jpg. Max file size 2Mb
+
+
+        - if @person.verified_identification && @person.bank_name.present? && @person.bank_account_no.present? && @person.bank_account_name.present?
+          %h3.text-light.text-success Verified bank account
+        - else
+          %h3.text-light.text-warning Unverifited bank account
+
+          .form-group.has-feedback.has-feedback-left
+            %label Bank Name:
+            = f.text_field :bank_name, placeholder: "Eg. Public Bank Berhad", class: "form-control input-lg"
+            .form-control-feedback
+              %i.icon-address-book
+
+          .form-group.has-feedback.has-feedback-left
+            %label Bank Account No.:
+            = f.text_field :bank_account_no, placeholder: "Eg. 1234567890...", class: "form-control input-lg"
+            .form-control-feedback
+              %i.icon-address-book
+
+          .form-group.has-feedback.has-feedback-left
+            %label Bank Account Name:
+            = f.text_field :bank_account_name, placeholder: "Eg. John Doe", class: "form-control input-lg"
+            .form-control-feedback
+              %i.icon-address-book
+            %span.help-block Name displayed on the bank record.
+
+
+        .text-right
+          = f.button type: "submit", class: "btn btn-primary btn-xlg" do
+            Save Changes
+            %i.icon-pencil5.position-right
+  / /basic layout
+
+.col-lg-4
+  .thumbnail
+    .caption.text-center
+      - if current_person.qr_code.present?
+        %h5.text-light.no-margin= "Sponsor through QR Code"
+        .thumb.thumb-slide
+          = image_tag current_person.qr_code
+      -# .caption
+      -#   %span
+      -#     %a.btn.bg-success-400.btn-icon.btn-xs{"data-popup" => "lightbox", :href => "#"}
+      -#       %i.icon-plus2
+      -#     %a.btn.bg-success-400.btn-icon.btn-xs{:href => "user_pages_profile.html"}
+      -#       %i.icon-link
+
+    .caption.text-center
+      %h5.text-light.no-margin= "Sponsor through link"
+      %p= link_to "#{@person.sponsor_token}", "#{request.protocol}#{request.host}/join/#{@person.sponsor_token}"

@@ -1,0 +1,75 @@
+- if current_person.admin
+  %li
+    = link_to admin_root_path do
+      %i.icon-cogs
+      %span.visible-xs-inline-block.position-right Site Admin
+
+- if current_person.businesses.present?
+  %li.dropdown
+    = link_to "javascript:;", class: "dropdown-toggle", data: { toggle: "dropdown"} do
+      %i.icon-store2
+      %span.visible-xs-inline-block.position-right My Busineses
+    .dropdown-menu.dropdown-content
+      .dropdown-content-heading
+        List of Businesses
+      %ul.media-list.dropdown-content-body.width-300
+        - current_person.businesses.each do |business|
+          - unless business.id == nil
+            %li.media
+              .media-left
+                - if business.logo.present?
+                  = image_tag business.logo, class: "img-sm"
+                - else
+                  = image_tag "default_business_logo.png", class: "img-sm"
+              .media-body
+                = link_to business.name, business_path(business), class: "media-heading text-semibold"
+              .media-right.media-middle
+                = link_to business_merchant_root_path(business) do
+                  %i.icon-cogs
+
+      .dropdown-content-footer
+        = link_to "javascript:;", class: "dropdown-toggle", data: { popup: "Open new business"} do
+          %h6 Open new business
+
+- else
+
+  %li= link_to "Open a business", open_a_business_path
+
+%li
+  = link_to person_carts_path(current_person) do
+    %i.icon-cart4
+    %span.visible-xs-inline-block.position-right Shopping Cart
+
+%li.dropdown.dropdown-user
+  = link_to "javascript:;", class: "dropdown-toggle", data: { toggle: "dropdown"} do
+    - if current_person.avatar.present?
+      = image_tag current_person.avatar
+    - else
+      = image_tag "default_person_avatar.png"
+    %span= current_person.first_name
+
+  %ul.dropdown-menu.dropdown-menu-right
+    %li
+      = link_to current_person do
+        %i.icon-user-plus
+        Personal profile
+    %li
+      = link_to person_wallets_path(current_person) do
+        %i.icon-coins
+        Cash wallet
+    %li
+      = link_to person_rewards_path(current_person) do
+        %i.icon-credit-card
+        Reward point
+
+    %li.divider
+
+    %li
+      = link_to edit_person_path(current_person) do
+        %i.icon-cog5
+        Account settings
+
+%li
+  = link_to logout_path do
+    %i.icon-switch2
+    %span.visible-xs-inline-block.position-right Log Out

@@ -1,0 +1,34 @@
+- content_for :body_class, "layout-boxed"
+
+- content_for :render_partial_sidebar do
+  = render partial: "layouts/shared/sidebar/people"
+
+%h1.text-light Subscription's History
+
+.panel.panel-default
+  .panel-heading
+
+  .table-responsive
+    %table.table.text-nowrap
+      %thead
+        %tr
+          %th.col-md-2 Ref. No.
+          %th Membership Plan
+          %th.col-md-2 Created At
+          %th.col-md-2 Expired At
+          %th.col-md-2 Duration Left
+      %tbody
+
+        - @subscriptions.each do |subscription|
+          %tr
+            %td
+              = subscription.id
+            %td
+              .text-default.text-semibold= subscription.plan.name
+              .text-muted.text-size-small= number_to_currency(subscription.plan.price, unit: "RM", separator: ".", delimiter: ",", format: "%u %n")
+            %td
+              = subscription.created_at.to_date
+            %td
+              = subscription.expired_at.to_date
+            %td
+              = distance_of_time_in_words(subscription.created_at, subscription.expired_at.to_datetime)

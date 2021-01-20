@@ -1,0 +1,103 @@
+- content_for :page_header do
+  .page-header
+    .page-header-content
+      .page-title.text-center
+        %h1
+          %span.text-semibold
+            Milk Carton Power Bank
+          %small.display-block
+            sold by
+            = link_to "Nick's Boutique", root_path
+
+.panel.panel-flat
+  .panel-body
+    .row
+      .col-md-8
+
+        .tabbable
+
+          .tab-content
+            #product_images1.tab-pane.active
+              .item.col-md-12
+                .thumbnail
+                  .thumb
+                    = image_tag "https://pixel.brit.co/wp-content/uploads/2016/08/toastfeature.jpg?w=512&h=512&fit=crop"
+            #product_images2.tab-pane
+              .item.col-md-12
+                .thumbnail
+                  .thumb
+                    = image_tag "https://pixel.brit.co/wp-content/uploads/2016/08/toastfeature.jpg?w=512&h=512&fit=crop"
+            #product_images3.tab-pane
+              .item.col-md-12
+                .thumbnail
+                  .thumb
+                    = image_tag "https://pixel.brit.co/wp-content/uploads/2016/08/toastfeature.jpg?w=512&h=512&fit=crop"
+            #product_images4.tab-pane
+              .item.col-md-12
+                .thumbnail
+                  .thumb
+                    = image_tag "https://pixel.brit.co/wp-content/uploads/2016/08/toastfeature.jpg?w=512&h=512&fit=crop"
+            #product_images5.tab-pane
+              .item.col-md-12
+                .thumbnail
+                  .thumb
+                    = image_tag "https://pixel.brit.co/wp-content/uploads/2016/08/toastfeature.jpg?w=512&h=512&fit=crop"
+
+          %ul.nav.nav-tabs.nav-tabs-top.top-divided.nav-justified
+            %li.active
+              = link_to "#product_images1", data: { toggle: "tab" } do
+                .thumb
+                  = image_tag "https://pixel.brit.co/wp-content/uploads/2016/08/toastfeature.jpg?w=512&h=512&fit=crop"
+            %li
+              = link_to "#product_images2", data: { toggle: "tab" } do
+                .thumb
+                  = image_tag "http://cdn.shopify.com/s/files/1/0925/6202/products/watch-drink-me-alice-in-wonderland-pocket-watch-with-rabbit-3.jpg"
+            %li
+              = link_to "#product_images3", data: { toggle: "tab" } do
+                .thumb
+                  = image_tag "https://pixel.brit.co/wp-content/uploads/2016/08/toastfeature.jpg?w=512&h=512&fit=crop"
+            %li
+              = link_to "#product_images4", data: { toggle: "tab" } do
+                .thumb
+                  = image_tag "https://pixel.brit.co/wp-content/uploads/2016/08/toastfeature.jpg?w=512&h=512&fit=crop"
+            %li
+              = link_to "#product_images5", data: { toggle: "tab" } do
+                .thumb
+                  = image_tag "https://pixel.brit.co/wp-content/uploads/2016/08/toastfeature.jpg?w=512&h=512&fit=crop"
+
+        .tabbable
+
+          %ul.nav.nav-tabs.nav-tabs-highlight
+            %li.active
+              = link_to "Description", "#description", data: { toggle: "tab" }
+            %li
+              = link_to "Shipment Info.", "#shipment", data: { toggle: "tab" }
+
+          .tab-content
+            #description.tab-pane.active
+              Highlight top border of the active tab by adding
+              %code .nav-tabs-highlight
+              class.
+            #shipment.tab-pane
+              .text-semibold Shipment Fees
+
+              %small.display-block
+                Peninsular  : RM6
+                %br
+                Sabah, Labuan : RM10
+                %br
+                Sarawak : RM10
+
+      .col-md-4
+        .panel.panel-flat
+          .panel-title.text-center
+            %h1.text-semibold
+              RM 75.00
+
+            %p
+              %button.btn.btn-primary.btn-labeled.btn-xlg{:type => "button"}
+                %b
+                  %i.icon-cart
+                Add To Cart
+              %br
+              %br

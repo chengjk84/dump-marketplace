@@ -1,0 +1,229 @@
+- content_for :body_class, "layout-boxed"
+
+- content_for :render_partial_sidebar do
+  = render partial: "layouts/shared/sidebar/merchant"
+
+.col-lg-8
+  %h1.text-light Merchant Settings
+
+  .panel.panel-flat
+    .panel-heading
+      %h2.panel-title Edit your business information
+
+    .panel-body
+      = form_for @business, multipart: true do |f|
+        - if @business.errors.any?
+          - @business.errors.full_messages.each do |message|
+            = message
+        .form-group.has-feedback.has-feedback-left
+          %label Business Name:
+          = f.text_field :name, placeholder: "Eg. Joyce's Boutique Sdn. Bhd.", class: "form-control input-lg"
+          .form-control-feedback
+            %i.icon-store2
+
+        .form-group
+          %label.display-block Business type:
+          = f.collection_select :type_id, Type.all, :id, :name, {}, {class: "select"}
+
+        .form-group
+          %label.display-block Business listed as:
+          = f.collection_select :list_id, List.all, :id, :name, {}, {class: "select"}
+
+        .form-group.has-feedback.has-feedback-left
+          %label API Key:
+          = f.text_field :uuid, readonly: "readonly", class: "form-control input-lg"
+          .form-control-feedback
+            %i.icon-lock2
+
+        .form-group.has-feedback.has-feedback-left
+          %label Email Address:
+          = f.text_field :email, placeholder: "Eg. user@example.com", class: "form-control input-lg"
+          .form-control-feedback
+            %i.icon-mention
+
+        .form-group
+          %label Mobile Phone:
+          = f.text_field :mobile, placeholder: "Eg. +60123456789", class: "form-control input-lg"
+
+        .form-group
+          %label Business Phone:
+          = f.text_field :phone, placeholder: "Eg. +6049764521", class: "form-control input-lg"
+
+        .form-group
+          %label Business Fax:
+          = f.text_field :fax, placeholder: "Eg. +6049763923", class: "form-control input-lg"
+
+        .form-group
+          %label.text-semibold Business logo:
+          .media.no-margin-top
+            .media-left
+              - if @business.logo.present?
+                = image_tag @business.logo, style: "width: 58px; height: 58px; border-radius: 2px;"
+              - else
+                = image_tag "default_business_logo.png", style: "width: 58px; height: 58px; border-radius: 2px;"
+            .media-body
+              = f.file_field :logo, class: "file-styled input-lg"
+              %span.help-block Accepted formats: png & jpg. Accepted dimension: 640 x 640.
+
+        .form-group
+          %label.text-semibold Business banner:
+          .media.no-margin-top
+            .media-left
+              - if @business.banner.present?
+                = image_tag @business.banner, style: "width: 153px; height: 58px; border-radius: 2px;"
+              - else
+                = image_tag "default_business_banner.png", style: "width: 153px; height: 58px; border-radius: 2px;"
+            .media-body
+              = f.file_field :banner, class: "file-styled input-lg"
+              %span.help-block Accepted formats: png & jpg. Accepted dimension: 1180 x 380.
+
+        .form-group
+          %label About:
+          = f.text_area :about, size: "5x5", placeholder: "Enter your bio here", class: "form-control input-lg"
+
+        .form-group.has-feedback.has-feedback-left
+          %label Street Line 1:
+          = f.text_field :street_1, placeholder: "Eg. No. 28, Jln. Raya II", class: "form-control input-lg"
+          .form-control-feedback
+            %i.icon-address-book
+
+        .form-group.has-feedback.has-feedback-left
+          %label Street Line 2:
+          = f.text_field :street_2, placeholder: "Eg. Tmn Bukit Raya", class: "form-control input-lg"
+          .form-control-feedback
+            %i.icon-address-book
+
+        .form-group.has-feedback.has-feedback-left
+          %label City:
+          = f.text_field :city, placeholder: "Eg. Setapak", class: "form-control input-lg"
+          .form-control-feedback
+            %i.icon-address-book
+
+        .form-group.has-feedback.has-feedback-left
+          %label Postcode:
+          = f.text_field :postcode, placeholder: "Eg. 53300", class: "form-control input-lg"
+          .form-control-feedback
+            %i.icon-address-book
+
+        .form-group.has-feedback.has-feedback-left
+          %label State:
+          = f.text_field :state, placeholder: "Eg. Kuala Lumpur", class: "form-control input-lg"
+          .form-control-feedback
+            %i.icon-address-book
+
+        .form-group.has-feedback.has-feedback-left
+          %label Country:
+          = f.text_field :country, placeholder: "Eg. Malaysia", class: "form-control input-lg"
+          .form-control-feedback
+            %i.icon-address-book
+
+
+        - if @business.verified
+          %h3.text-light.text-success Business verified
+        - else
+          %h3.text-light.text-warning Business unverifited
+
+        .form-group.has-feedback.has-feedback-left
+          %label SSM / ROC / ROB / ROS Number:
+          = f.text_field :certificate_id, placeholder: "Eg. RA-1234567-X", class: "form-control input-lg"
+          .form-control-feedback
+            %i.icon-address-book
+
+        .form-group
+          %label.text-semibold SSM / ROC / ROB / ROS Certificate Photocopy:
+          .media.no-margin-top
+            .media-left
+              - if @business.certificate_photo.present?
+                = image_tag @business.certificate_photo, style: "width: 58px; height: 58px; border-radius: 2px;"
+              - else
+                = image_tag "default_product_image.png", style: "width: 58px; height: 58px; border-radius: 2px;"
+            .media-body
+              = f.file_field :certificate_photo, class: "file-styled input-lg"
+              %span.help-block Accepted formats: gif, png, jpg. Max file size 2Mb
+
+
+
+        - if @business.gst_verified
+          %h3.text-light.text-success Business GST collection verified
+        - else
+          %h3.text-light.text-warning Business GST collection unverifited
+
+        .form-group.has-feedback.has-feedback-left
+          %label Custom GST No.:
+          = f.text_field :gst_no, placeholder: "Eg. 1234567890", class: "form-control input-lg"
+          .form-control-feedback
+            %i.icon-address-book
+
+        .form-group
+          %label.text-semibold Custom GST Certificate Photocopy:
+          .media.no-margin-top
+            .media-left
+              - if @business.gst_certification_photo.present?
+                = image_tag @business.gst_certification_photo, style: "width: 58px; height: 58px; border-radius: 2px;"
+              - else
+                = image_tag "default_product_image.png", style: "width: 58px; height: 58px; border-radius: 2px;"
+            .media-body
+              = f.file_field :gst_certification_photo, class: "file-styled input-lg"
+              %span.help-block Accepted formats: gif, png, jpg. Max file size 2Mb
+
+
+
+        - if @business.verified_bank_account
+          %h3.text-light.text-success Verified bank account
+        - else
+          %h3.text-light.text-warning Unverifited bank account
+
+        .form-group.has-feedback.has-feedback-left
+          %label Bank Name:
+          = f.text_field :bank_name, placeholder: "Eg. Public Bank Berhad", class: "form-control input-lg"
+          .form-control-feedback
+            %i.icon-address-book
+
+        .form-group.has-feedback.has-feedback-left
+          %label Bank Account No.:
+          = f.text_field :bank_account_no, placeholder: "Eg. 1234567890...", class: "form-control input-lg"
+          .form-control-feedback
+            %i.icon-address-book
+
+        .form-group.has-feedback.has-feedback-left
+          %label Bank Account Name:
+          = f.text_field :bank_account_name, placeholder: "Eg. Your Company Enterprise", class: "form-control input-lg"
+          .form-control-feedback
+            %i.icon-address-book
+
+
+
+
+        .form-group.has-feedback.has-feedback-left
+          %label Map Longitude:
+          = f.text_field :lng, placeholder: "Eg. 30.055487", class: "form-control input-lg"
+          .form-control-feedback
+            %i.icon-location4
+
+        .form-group.has-feedback.has-feedback-left
+          %label Map Latitude:
+          = f.text_field :lat, placeholder: "Eg. 31.279766", class: "form-control input-lg"
+          .form-control-feedback
+            %i.icon-location4
+
+        .text-right
+          = f.button type: "submit", class: "btn btn-primary btn-xlg" do
+            Save Changes
+            %i.icon-pencil5.position-right
+
+.col-lg-4
+  .thumbnail
+    .caption.text-center
+      - if @business.person.qr_code.present?
+        %h5.text-light.no-margin= "Sponsor through QR Code"
+        .thumb.thumb-slide
+          = image_tag @business.person.qr_code
+      -# .caption
+      -#   %span
+      -#     %a.btn.bg-success-400.btn-icon.btn-xs{"data-popup" => "lightbox", :href => "#"}
+      -#       %i.icon-plus2
+      -#     %a.btn.bg-success-400.btn-icon.btn-xs{:href => "user_pages_profile.html"}
+      -#       %i.icon-link
+    .caption.text-center
+      %h5.text-light.no-margin= "Sponsor through link"
+      %p= link_to "#{request.protocol}#{request.host}/join/#{@business.person.sponsor_token}", "#{request.protocol}#{request.host}/join/#{@business.person.sponsor_token}"

@@ -1,0 +1,72 @@
+- content_for :body_class, "layout-boxed"
+
+- content_for :render_partial_sidebar do
+  = render partial: "layouts/shared/sidebar/people"
+
+
+- if @carts.present?
+
+  %h1.text-light List of Shopping Carts
+
+
+  - @carts.each do |cart|
+    .panel.panel-default
+      .panel-heading
+        %h6.panel-title
+          Order from
+          = link_to cart.business.name, cart.business
+
+        .heading-elements
+          .btn-toolbar
+            .btn-group
+              -#= button_to person_order_path(current_person, cart, status: 2), method: :patch, class: "btn btn-primary btn-labeled heading-btn" do
+              = link_to "", method: :patch, class: "btn btn-primary btn-labeled heading-btn" do
+                %b
+                  %i.icon-file-plus
+                Place Order
+            .btn-group
+              = button_to person_cart_path(current_person, cart), method: :patch, class: "btn btn-danger btn-labeled heading-btn" do
+                %b
+                  %i.icon-file-minus
+                Cancel Cart
+
+      .table-responsive
+        %table.table.text-nowrap
+          %thead
+            %tr
+              %th Description
+              %th.col-md-2 Unit Price
+              %th.col-md-2 Quantity
+              %th.col-md-2 Total Price
+              %th.text-center{:style => "width: 30px;"}
+                %i.icon-menu
+          %tbody
+
+            - cart.items.each do |item|
+              %tr
+                %td
+                  .text-default.text-semibold= item.product.name
+                %td.col-md-2
+                  = number_to_currency(item.unit_price, unit: "RM", separator: ".", delimiter: ",", format: "%u %n")
+                %td.col-md-2
+                  = item.quantity
+                %td.col-md-2
+                  = number_to_currency(item.total_price, unit: "RM", separator: ".", delimiter: ",", format: "%u %n")
+                %td
+                  action
+
+          %tfoot
+            %tr
+              %td
+              %td.col-md-2
+              %td.col-md-2
+                .text-bold.text-right Sub-Total:
+                .text-bold.text-right Shipment:
+                .text-bold.text-right Total:
+              %td.col-md-2
+                .text-default= number_to_currency(cart.get_subtotal, unit: "RM", separator: ".", delimiter: ",", format: "%u %n")
+                .text-default= number_to_currency(cart.get_shipment, unit: "RM", separator: ".", delimiter: ",", format: "%u %n")
+                .text-default= number_to_currency(cart.get_total, unit: "RM", separator: ".", delimiter: ",", format: "%u %n")
+              %td
+- else
+  %h1.text-light Your shopping cart is empty

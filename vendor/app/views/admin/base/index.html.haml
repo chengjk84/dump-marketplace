@@ -1,0 +1,7 @@
+- content_for :body_class, "layout-boxed"
+
+- content_for :render_partial_sidebar do
+  = render partial: "layouts/shared/sidebar/admin"
+
+%h1.text-light Administrative Dashboard
+%p Find me in app/views/admin/base/index.html.haml

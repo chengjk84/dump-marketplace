@@ -1,0 +1,38 @@
+/ Main navbar
+.navbar.navbar-inverse.bg-atlantis
+  .navbar-boxed
+    .navbar-header
+      = link_to root_path, class: 'navbar-brand' do
+        = image_tag 'atlantis_logo.png', alt: 'We make life happening'
+
+      %ul.nav.navbar-nav.visible-xs-block
+        %li
+          %a{"data-target" => "#navbar-mobile", "data-toggle" => "collapse"}
+            %i.icon-tree5
+        %li
+          %a.sidebar-mobile-main-toggle
+            %i.icon-paragraph-justify3
+
+    #navbar-mobile.navbar-collapse.collapse
+      %ul.nav.navbar-nav
+        %li
+          %a.sidebar-control.sidebar-main-toggle.hidden-xs
+            %i.icon-paragraph-justify3
+        %li
+          = link_to products_path do
+            %i.icon-search4
+            %span.visible-xs-inline-block.position-right Search
+
+      %ul.nav.navbar-nav.navbar-right
+
+        - if current_person
+
+          = render partial: 'layouts/shared/nav_top/usernav'
+
+        - else
+
+          %li
+            = link_to "Register", register_path
+
+          %li
+            = link_to "Log In", login_path

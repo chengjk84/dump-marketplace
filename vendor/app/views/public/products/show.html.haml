@@ -1,0 +1,146 @@
+- content_for :body_class, "layout-boxed"
+
+- content_for :page_header do
+  .page-header
+    .page-header-content
+      .page-title.text-center
+        %h1.no-margin
+          = @product.name
+          %small.display-block
+            sold by
+            = link_to @product.business.name, business_path(@product.business)
+
+.panel.panel-flat
+  .panel-body
+    .row
+      .col-md-8
+
+        #image.carousel.slide{"data-ride" => "carousel"}
+          / Indicators
+          %ol.carousel-indicators
+            %li.active{"data-slide-to" => "0", "data-target" => "#image"}
+            %li{"data-slide-to" => "1", "data-target" => "#image"}
+            %li{"data-slide-to" => "2", "data-target" => "#image"}
+            %li{"data-slide-to" => "3", "data-target" => "#image"}
+            %li{"data-slide-to" => "4", "data-target" => "#image"}
+          / Wrapper for slides
+          .carousel-inner{:role => "listbox"}
+            .item.col-md-12.active
+              .thumbnail
+                .thumb
+                  - if @product.image_01.present?
+                    = image_tag @product.image_01, alt: "#{@product.name}"
+                  - else
+                    = image_tag "default_product_image.png"
+            - if @product.image_02.present?
+              .item.col-md-12
+                .thumbnail
+                  .thumb
+                    = image_tag @product.image_02, alt: "#{@product.name}"
+            - if @product.image_03.present?
+              .item.col-md-12
+                .thumbnail
+                  .thumb
+                    = image_tag @product.image_03, alt: "#{@product.name}"
+            - if @product.image_04.present?
+              .item.col-md-12
+                .thumbnail
+                  .thumb
+                    = image_tag @product.image_04, alt: "#{@product.name}"
+            - if @product.image_05.present?
+              .item.col-md-12
+                .thumbnail
+                  .thumb
+                    = image_tag @product.image_05, alt: "#{@product.name}"
+
+          %a.left.carousel-control{"data-slide" => "prev", :href => "#image", :role => "button"}
+            %span.glyphicon.glyphicon-chevron-left{"aria-hidden" => "true"}
+            %span.sr-only Previous
+          %a.right.carousel-control{"data-slide" => "next", :href => "#image", :role => "button"}
+            %span.glyphicon.glyphicon-chevron-right{"aria-hidden" => "true"}
+            %span.sr-only Next
+
+        - if @product.description.present?
+          %h3.text-light Description
+          = raw @product.description
+        - else
+          %h3.text-light.text-center No description available!
+
+      .col-md-4
+        .panel.panel-flat
+          .panel-title.text-center
+            %h2= number_to_currency(@product.price, unit: "RM", separator: ".", delimiter: ",", format: "%u %n")
+            %h6.no-margin.text-light= "#{@product.stock_in_hand} unit(s) available"
+
+            - if current_person
+              %h5.no-margin.text-light Update address to view shipment
+
+              - if @product.shipment_peninsular.present? || @product.shipment_sabah_and_labuan.present? || @product.shipment_sarawak.present?
+                - if current_person.state.present?
+                  - if current_person.state == "Sabah" || current_person.state == "Labuan"
+                    %h5.no-margin.text-light
+                      Sabah/Labuan shipment:
+                      = number_to_currency(@product.shipment_sabah_and_labuan, unit: "RM", separator: ".", delimiter: ",", format: "%u %n")
+                  - elsif current_person.state == "Sarawak"
+                    %h5.no-margin.text-light
+                      Sarawak shipment:
+                      = number_to_currency(@product.shipment_sarawak, unit: "RM", separator: ".", delimiter: ",", format: "%u %n")
+                  - else
+                    %h5.no-margin.text-light
+                      Peninsular shipment:
+                      = number_to_currency(@product.shipment_peninsular, unit: "RM", separator: ".", delimiter: ",", format: "%u %n")
+              - else
+                %h5.no-margin.text-light No shipment fees
+
+              %p
+                = button_to person_carts_path(current_person, product_id: @product.id, business_id: @product.business.id), method: :post, class: "btn btn-primary btn-labeled btn-xlg" do
+                  %b
+                    %i.icon-cart-add
+                  Add to Cart
+
+              %p
+                = button_to person_favorites_path(current_person, product_id: @product.id, business_id: @product.business.id), method: :post, class: "btn btn-primary btn-labeled btn-xlg" do
+                  %b
+                    %i.icon-heart6
+                  Favorite
+
+              %p
+                = button_to person_collections_path(current_person, product_id: @product.id, business_id: @product.business.id), method: :post, class: "btn btn-primary btn-labeled btn-xlg" do
+                  %b
+                    %i.icon-drawer3
+                  Collection
+
+            - else
+              %h5.no-margin.text-light Register to view shipment
+
+            %br
+
+        - if @product.qr_code.present?
+          .thumbnail
+            .thumb
+              = image_tag @product.qr_code
+
+        .thumbnail
+          .thumb.thumb-rounded
+            - if @product.business.logo.present?
+              = image_tag @product.business.logo
+            - else
+              = image_tag "default_business_logo.png"
+            .caption-overflow
+              %span
+                = link_to @product.business, class: "btn bg-success-400 btn-icon btn-xs" do
+                  %i.icon-link
+          .caption.text-center
+            %h6.text-semibold.no-margin
+              = @product.business.name
+
+          - @product.business.products.sample(6).each do |product|
+            .col-md-4
+              .thumbnail
+                .thumb
+                  = link_to product do
+                    - if product.image_01.present?
+                      = image_tag product.image_01
+                    - else
+                      = image_tag "default_product_image.png"
+          .clearfix

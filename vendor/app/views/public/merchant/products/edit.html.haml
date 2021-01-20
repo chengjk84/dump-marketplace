@@ -1,0 +1,117 @@
+- content_for :body_class, "layout-boxed"
+
+- content_for :render_partial_sidebar do
+  = render partial: "layouts/shared/sidebar/merchant"
+
+%h1.text-light Products Management
+
+.panel.panel-flat
+
+  .panel-heading
+    %h2.panel-title Edit product information
+
+  .panel-body
+    = form_for([@business, :merchant, @product], multipart: true) do |f|
+      .form-group
+        %label Product Name:
+        = f.text_field :name, placeholder: "Eg. Street Fashion Glasses", class: "form-control input-lg"
+
+      .form-group
+        %label Description:
+        = f.text_area :description, size: "5x5", placeholder: "Enter product description here...", class: "form-control input-lg"
+
+      .form-group
+        %label.checkbox-inline
+          = f.check_box :featured, class: "styled"
+          Make it as featured product
+
+      .form-group
+        %label.display-block Category:
+        = f.collection_select :category_id, Category.all, :id, :name, {}, class: "select"
+
+      .form-group
+        %label Price
+        .input-group
+          %span.input-group-addon RM
+          = f.text_field :price, placeholder: "0.00", class: "form-control input-lg"
+
+      .form-group
+        %label Quantity on Hand:
+        .input-group
+          %span.input-group-addon Unit
+          = f.text_field :stock_in_hand, placeholder: "0.00", class: "form-control input-lg"
+
+      .form-group
+        %label Shipment - Peninsular
+        .input-group
+          %span.input-group-addon RM
+          = f.text_field :shipment_peninsular, placeholder: "0.00", class: "form-control input-lg"
+
+      .form-group
+        %label Shipment - Sabah
+        .input-group
+          %span.input-group-addon RM
+          = f.text_field :shipment_sabah_and_labuan, placeholder: "0.00", class: "form-control input-lg"
+
+      .form-group
+        %label Shipment - Sarawak
+        .input-group
+          %span.input-group-addon RM
+          = f.text_field :shipment_sarawak, placeholder: "0.00", class: "form-control input-lg"
+
+      .form-group
+        %label.text-semibold Product images:
+        .media.no-margin-top
+          .media-left
+            - if @product.image_01.present?
+              = image_tag @product.image_01, style: "width: 58px; height: 58px; border-radius: 2px;"
+            - else
+              = image_tag "default_product_image.png", style: "width: 58px; height: 58px; border-radius: 2px;"
+          .media-body
+            = f.file_field :image_01, class: "file-styled input-lg"
+            %span.help-block Accepted formats: png & jpg. Accepted dimension: 640 x 640.
+
+        .media.no-margin-top
+          .media-left
+            - if @product.image_02.present?
+              = image_tag @product.image_02, style: "width: 58px; height: 58px; border-radius: 2px;"
+            - else
+              = image_tag "default_product_image.png", style: "width: 58px; height: 58px; border-radius: 2px;"
+          .media-body
+            = f.file_field :image_02, class: "file-styled input-lg"
+            %span.help-block Accepted formats: png & jpg. Accepted dimension: 640 x 640.
+
+        .media.no-margin-top
+          .media-left
+            - if @product.image_03.present?
+              = image_tag @product.image_03, style: "width: 58px; height: 58px; border-radius: 2px;"
+            - else
+              = image_tag "default_product_image.png", style: "width: 58px; height: 58px; border-radius: 2px;"
+          .media-body
+            = f.file_field :image_03, class: "file-styled input-lg"
+            %span.help-block Accepted formats: png & jpg. Accepted dimension: 640 x 640.
+
+        .media.no-margin-top
+          .media-left
+            - if @product.image_04.present?
+              = image_tag @product.image_04, style: "width: 58px; height: 58px; border-radius: 2px;"
+            - else
+              = image_tag "default_product_image.png", style: "width: 58px; height: 58px; border-radius: 2px;"
+          .media-body
+            = f.file_field :image_04, class: "file-styled input-lg"
+            %span.help-block Accepted formats: png & jpg. Accepted dimension: 640 x 640.
+
+        .media.no-margin-top
+          .media-left
+            - if @product.image_05.present?
+              = image_tag @product.image_05, style: "width: 58px; height: 58px; border-radius: 2px;"
+            - else
+              = image_tag "default_product_image.png", style: "width: 58px; height: 58px; border-radius: 2px;"
+          .media-body
+            = f.file_field :image_05, class: "file-styled input-lg"
+            %span.help-block Accepted formats: png & jpg. Accepted dimension: 640 x 640.
+
+      .text-right
+        = f.button type: "submit", class: "btn btn-primary btn-xlg" do
+          Submit
+          %i.icon-pencil5.position-right

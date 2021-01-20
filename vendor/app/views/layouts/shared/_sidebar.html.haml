@@ -1,0 +1,262 @@
+/ Main sidebar
+.sidebar.sidebar-main.sidebar-default
+  .sidebar-content
+    / Title
+    .category-title.h6
+      %span Components
+      %ul.icons-list
+        %li
+          %a{:href => "boxed_default.html#"}
+            %i.icon-gear
+    / /title
+    / Search task
+    .sidebar-category
+      .category-title
+        %span Search task
+        %ul.icons-list
+          %li
+            %a{"data-action" => "collapse", :href => "boxed_default.html#"}
+      .category-content
+        %form{:action => "boxed_default.html#"}
+          .has-feedback.has-feedback-left
+            %input.form-control{:placeholder => "Type and hit Enter", :type => "search"}/
+            .form-control-feedback
+              %i.icon-search4.text-size-base.text-muted
+    / /search task
+    / Action buttons
+    .sidebar-category
+      .category-title
+        %span Action buttons
+        %ul.icons-list
+          %li
+            %a{"data-action" => "collapse", :href => "boxed_default.html#"}
+      .category-content
+        .row
+          .col-xs-6
+            %button.btn.bg-teal-400.btn-block.btn-float.btn-float-lg{:type => "button"}
+              %i.icon-git-branch
+              %span Branch
+            %button.btn.bg-purple-300.btn-block.btn-float.btn-float-lg{:type => "button"}
+              %i.icon-mail-read
+              %span Messages
+          .col-xs-6
+            %button.btn.bg-warning-400.btn-block.btn-float.btn-float-lg{:type => "button"}
+              %i.icon-stats-bars
+              %span Statistics
+            %button.btn.bg-blue.btn-block.btn-float.btn-float-lg{:type => "button"}
+              %i.icon-people
+              %span Users
+    / /action buttons
+    / Task navigation
+    .sidebar-category.sidebar-category-visible
+      .category-title
+        %span Navigation
+        %ul.icons-list
+          %li
+            %a{"data-action" => "collapse", :href => "boxed_default.html#"}
+      .category-content.no-padding
+        %ul.navigation.navigation-main.navigation-accordion
+          %li.navigation-header
+            %span Actions
+            %i.icon-menu{:title => "Actions"}
+          %li
+            %a{:href => "boxed_default.html#"}
+              %i.icon-googleplus5
+              %span Create task
+          %li
+            %a{:href => "boxed_default.html#"}
+              %i.icon-portfolio
+              %span Create project
+          %li
+            %a{:href => "boxed_default.html#"}
+              %i.icon-compose
+              %span Edit task list
+          %li
+            %a{:href => "boxed_default.html#"}
+              %i.icon-user-plus
+              %span
+                Assign users
+                %span.label.label-success 94 online
+          %li
+            %a{:href => "boxed_default.html#"}
+              %i.icon-collaboration
+              %span Create team
+          %li.navigation-header
+            %span Tasks
+            %i.icon-menu{:title => "Tasks"}
+          %li
+            %a{:href => "boxed_default.html#"}
+              %i.icon-files-empty
+              %span All tasks
+          %li
+            %a{:href => "boxed_default.html#"}
+              %i.icon-file-plus
+              %span
+                Active tasks
+                %span.badge.badge-default 28
+          %li
+            %a{:href => "boxed_default.html#"}
+              %i.icon-file-check
+              %span Closed tasks
+          %li.navigation-divider
+          %li
+            %a{:href => "boxed_default.html#"}
+              %i.icon-reading
+              %span
+                Assigned to me
+                %span.badge.badge-info 86
+          %li
+            %a{:href => "boxed_default.html#"}
+              %i.icon-make-group
+              %span
+                Assigned to my team
+                %span.badge.badge-info 47
+          %li
+            %a{:href => "boxed_default.html#"}
+              %i.icon-cog3
+              %span Settings
+    / /task navigation
+    / Assigned users
+    .sidebar-category
+      .category-title
+        %span Assigned users
+        %ul.icons-list
+          %li
+            %a{"data-action" => "collapse", :href => "boxed_default.html#"}
+      .category-content
+        %ul.media-list
+          %li.media
+            %a.media-left{:href => "boxed_default.html#"}
+              = image_tag "default_person_avatar.png", class: "img-circle img-sm"
+            .media-body
+              %a.media-heading.text-semibold{:href => "boxed_default.html#"} James Alexander
+              %span.text-size-mini.text-muted.display-block Santa Ana, CA.
+            .media-right.media-middle
+              %span.status-mark.bg-success
+          %li.media
+            %a.media-left{:href => "boxed_default.html#"}
+              = image_tag "default_person_avatar.png", class: "img-circle img-sm"
+            .media-body
+              %a.media-heading.text-semibold{:href => "boxed_default.html#"} Jeremy Victorino
+              %span.text-size-mini.text-muted.display-block Dowagiac, MI.
+            .media-right.media-middle
+              %span.status-mark.bg-danger
+          %li.media
+            %a.media-left{:href => "boxed_default.html#"}
+              = image_tag "default_person_avatar.png", class: "img-circle img-sm"
+            .media-body
+              %a.media-heading.text-semibold{:href => "boxed_default.html#"} Margo Baker
+              %span.text-size-mini.text-muted.display-block Kasaan, AK.
+            .media-right.media-middle
+              %span.status-mark.bg-success
+          %li.media
+            %a.media-left{:href => "boxed_default.html#"}
+              = image_tag "default_person_avatar.png", class: "img-circle img-sm"
+            .media-body
+              %a.media-heading.text-semibold{:href => "boxed_default.html#"} Beatrix Diaz
+              %span.text-size-mini.text-muted.display-block Neenah, WI.
+            .media-right.media-middle
+              %span.status-mark.bg-warning
+          %li.media
+            %a.media-left{:href => "boxed_default.html#"}
+              = image_tag "default_person_avatar.png", class: "img-circle img-sm"
+            .media-body
+              %a.media-heading.text-semibold{:href => "boxed_default.html#"} Richard Vango
+              %span.text-size-mini.text-muted.display-block Grapevine, TX.
+            .media-right.media-middle
+              %span.status-mark.bg-grey-400
+    / /assigned users
+    / Revisions
+    .sidebar-category
+      .category-title
+        %span Revisions
+        %ul.icons-list
+          %li
+            %a{"data-action" => "collapse", :href => "boxed_default.html#"}
+      .category-content
+        %ul.media-list
+          %li.media
+            .media-left
+              %a.btn.border-primary.text-primary.btn-flat.btn-rounded.btn-icon.btn-sm{:href => "boxed_default.html#"}
+                %i.icon-git-pull-request
+            .media-body
+              Drop the IE
+              %a{:href => "boxed_default.html#"} specific hacks
+              for temporal inputs
+              .media-annotation 4 minutes ago
+          %li.media
+            .media-left
+              %a.btn.border-warning.text-warning.btn-flat.btn-rounded.btn-icon.btn-sm{:href => "boxed_default.html#"}
+                %i.icon-git-commit
+            .media-body
+              Add full font overrides for popovers and tooltips
+              .media-annotation 36 minutes ago
+          %li.media
+            .media-left
+              %a.btn.border-info.text-info.btn-flat.btn-rounded.btn-icon.btn-sm{:href => "boxed_default.html#"}
+                %i.icon-git-branch
+            .media-body
+              %a{:href => "boxed_default.html#"} Chris Arney
+              created a new
+              %span.text-semibold Design
+              branch
+              .media-annotation 2 hours ago
+          %li.media
+            .media-left
+              %a.btn.border-success.text-success.btn-flat.btn-rounded.btn-icon.btn-sm{:href => "boxed_default.html#"}
+                %i.icon-git-merge
+            .media-body
+              %a{:href => "boxed_default.html#"} Eugene Kopyov
+              merged
+              %span.text-semibold Master
+              and
+              %span.text-semibold Dev
+              branches
+              .media-annotation Dec 18, 18:36
+          %li.media
+            .media-left
+              %a.btn.border-primary.text-primary.btn-flat.btn-rounded.btn-icon.btn-sm{:href => "boxed_default.html#"}
+                %i.icon-git-pull-request
+            .media-body
+              Have Carousel ignore keyboard events
+              .media-annotation Dec 12, 05:46
+    / /revisions
+    / Completeness stats
+    .sidebar-category
+      .category-title
+        %span Completeness stats
+        %ul.icons-list
+          %li
+            %a{"data-action" => "collapse", :href => "boxed_default.html#"}
+      .category-content
+        %ul.progress-list
+          %li
+            %label
+              Highest priority
+              %span 80%
+            .progress.progress-xxs
+              .progress-bar.progress-bar-danger{:style => "width: 80%"}
+                %span.sr-only 80% Complete
+          %li
+            %label
+              High priority
+              %span 70%
+            .progress.progress-xxs
+              .progress-bar.progress-bar-info{:style => "width: 70%"}
+                %span.sr-only 70% Complete
+          %li
+            %label
+              Normal priority
+              %span 50%
+            .progress.progress-xxs
+              .progress-bar.progress-bar-primary{:style => "width: 50%"}
+                %span.sr-only 50% Complete
+          %li
+            %label
+              Low prioruty
+              %span 60%
+            .progress.progress-xxs
+              .progress-bar.progress-bar-success{:style => "width: 60%"}
+                %span.sr-only 60% Complete
+    / /completeness stats
+/ /main sidebar

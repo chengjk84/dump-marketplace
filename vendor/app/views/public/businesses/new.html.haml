@@ -1,0 +1,53 @@
+- content_for :body_class, "layout-boxed login-container"
+
+= form_for(@business) do |f|
+
+  .panel.panel-body.login-form
+    .text-center
+      .icon-object.border-success.text-success
+        %i.icon-store2
+      %h5.content-group
+        Open a business. It's free!
+
+        %small.display-block All fields are required
+
+    .content-divider.text-muted.form-group
+      %span Your credentials
+
+    .form-group.has-feedback.has-feedback-left
+      = f.text_field :name, placeholder: "Business name", class: "form-control"
+      .form-control-feedback
+        %i.icon-user.text-muted
+      - if @business.errors[:name].present?
+        %span.help-block.text-danger
+          %i.icon-cancel-circle2.position-left
+          = @business.errors[:name].first
+
+    .form-group.has-feedback.has-feedback-left
+      = f.text_field :email, placeholder: "Email address", class: "form-control"
+      .form-control-feedback
+        %i.icon-mention.text-muted
+      - if @business.errors[:email].present?
+        %span.help-block.text-danger
+          %i.icon-cancel-circle2.position-left
+          = @business.errors[:email].first
+
+    .form-group.has-feedback.has-feedback-left
+      = f.text_field :mobile, placeholder: "Mobilephone number", class: "form-control"
+      .form-control-feedback
+        %i.icon-mention.text-muted
+      - if @business.errors[:mobile].present?
+        %span.help-block.text-danger
+          %i.icon-cancel-circle2.position-left
+          = @business.errors[:mobile].first
+
+    = f.button type: "submit", class: "btn bg-teal btn-block btn-lg" do
+      Open Your Business
+      %i.icon-add.position-right
+
+    %p
+
+    %span.help-block.text-center.no-margin
+      By registering you are agreeing to
+      = link_to "our seller's agreement", root_path
+      \.

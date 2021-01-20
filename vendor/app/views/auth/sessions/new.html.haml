@@ -1,0 +1,41 @@
+- content_for :body_class, "layout-boxed login-container"
+
+= form_tag auth_sessions_path do
+  .panel.panel-body.login-form
+    .text-center
+      .icon-object.border-slate-300.text-slate-300
+        %i.icon-reading
+      %h5.content-group
+        Log in to your account
+        %small.display-block Your credentials
+
+    .form-group.has-feedback.has-feedback-left
+      = text_field_tag :email, params[:email], placeholder: "Email", class: "form-control"
+      .form-control-feedback
+        %i.icon-user.text-muted
+
+    .form-group.has-feedback.has-feedback-left
+      = password_field_tag :password, nil, placeholder: "Password", class: "form-control"
+      .form-control-feedback
+        %i.icon-lock2.text-muted
+
+    .form-group.login-options
+      .row
+        .col-sm-6
+          %label.checkbox-inline
+            = check_box_tag :remember_me, 1, params[:remember_me], class: "styled"
+            Remember
+        .col-sm-6.text-right
+          = link_to "Forgot password?", root_path
+
+    .form-group
+      = button_tag type: "submit", class: "btn bg-blue btn-block" do
+        Log In
+        %i.icon-enter.position-right
+
+    .content-divider.text-muted.form-group
+      %span Don't have an account?
+
+    = link_to register_path, class: "btn btn-default btn-block content-group" do
+      Register
+      %i.icon-add.position-right

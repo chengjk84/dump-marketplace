@@ -1,0 +1,81 @@
+- content_for :body_class, "layout-boxed"
+
+- content_for :render_partial_sidebar do
+  = render partial: "layouts/shared/sidebar/people"
+
+%h1.text-light Reward Point
+
+.row
+  .col-lg-4
+    .panel.bg-success-800
+      .panel-body
+        %h3.no-margin= number_to_currency(current_person.reward_point.success, unit: "pt.", separator: ".", delimiter: ",", format: "%n %u")
+        Total spendable point
+
+  .col-lg-4
+    .panel.bg-warning-800
+      .panel-body
+        %h3.no-margin= number_to_currency(current_person.reward_point.pending_debit, unit: "pt.", separator: ".", delimiter: ",", format: "%n %u")
+        Total pending debit point
+
+  .col-lg-4
+    .panel.bg-warning-800
+      .panel-body
+        %h3.no-margin= number_to_currency(current_person.reward_point.pending_credit, unit: "pt.", separator: ".", delimiter: ",", format: "%n %u")
+        Total pending credit point
+
+.panel.panel-flat
+  .panel-heading
+    %h6.panel-title Point Transaction
+    .heading-elements
+      %span.label.bg-success.heading-text
+        = current_person.reward_point.transactions.where(status: "success").count
+        success
+      %span.label.bg-warning.heading-text
+        = current_person.reward_point.transactions.where(status: "pending").count
+        pending
+      %span.label.bg-danger.heading-text
+        = current_person.reward_point.transactions.where(status: "cancel").count
+        cancel
+      %ul.icons-list
+        %li
+          = link_to "" do
+            %i.icon-sync
+
+  .table-responsive
+    %table.table.text-nowrap
+      %thead
+        %tr
+          %th Description
+          %th.col-md-2 Reference No.
+          %th.col-md-2 Debit
+          %th.col-md-2 Credit
+          %th.col-md-2 Status
+      %tbody
+
+        - current_person.reward_point.transactions.each do |transaction|
+          %tr
+            %td
+              .text-default.text-semibold= transaction.description
+              .text-muted.text-size-small= transaction.updated_at
+            %td
+              %span.text-muted= transaction.ref_no
+            %td
+              - if transaction.debit.present?
+                %h6.text-semibold.text-success-600= number_to_currency(transaction.debit, unit: "pt.", separator: ".", delimiter: ",", format: "%n %u")
+              - else
+                %h6.text-semibold.text-success-600
+                  \-
+            %td
+              - if transaction.credit.present?
+                %h6.text-semibold.text-danger-600= number_to_currency(transaction.credit, unit: "pt.", separator: ".", delimiter: ",", format: "%n %u")
+              - else
+                %h6.text-semibold.text-danger-600
+                  \-
+            %td
+              - if transaction.status == "success"
+                %span.label.bg-success= transaction.status
+              - if transaction.status == "pending"
+                %span.label.bg-warning= transaction.status
+              - if transaction.status == "cancel"
+                %span.label.bg-danger= transaction.status

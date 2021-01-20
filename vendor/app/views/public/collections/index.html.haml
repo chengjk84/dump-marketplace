@@ -1,0 +1,33 @@
+- content_for :body_class, "layout-boxed"
+
+- if params[:person_id]
+  - content_for :render_partial_sidebar do
+    = render partial: "layouts/shared/sidebar/people"
+
+- if @collections.present?
+  .row
+    - @collections.each do |collection|
+      .col-md-4
+        .thumbnail
+          .caption.text-center
+            = link_to "product" do
+              %h5.no-margin.text-light.text-center= truncate(collection.name, :length => 24)
+
+          - collection.products.each do |product|
+            .col-md-4
+              .thumbnail
+                .thumb
+                  = link_to product do
+                    - if product.image_01.present?
+                      = image_tag product.image_01
+                    - else
+                      = image_tag "default_product_image.png"
+
+          .clearfix
+
+          .caption.text-center
+            Posted by
+            = collection.person.full_name
+
+- else
+  %h1.text-light.text-center No collection available!

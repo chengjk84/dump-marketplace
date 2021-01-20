@@ -1,0 +1,44 @@
+- content_for :body_class, "layout-boxed"
+
+- if @business.present?
+  = render partial: "public/businesses/cover"
+- else
+  - content_for :render_partial_sidebar do
+    = render partial: "layouts/shared/sidebar/categories"
+
+- if @products.present?
+  .row
+    - @products.each do |product|
+      .col-md-3
+        .thumbnail
+          .thumb
+            - if product.image_01.present?
+              = image_tag product.image_01
+            - else
+              = image_tag "default_product_image.png"
+            .caption-overflow
+              %span
+                = link_to product, class: "btn btn-flat border-white text-white btn-rounded btn-icon" do
+                  %i.icon-link2
+
+          .caption.text-center
+            %h6.text-semibold.no-margin= number_to_currency(product.price, unit: "RM", separator: ".", delimiter: ",", format: "%u %n")
+            = link_to product do
+              = truncate(product.name, :length => 14)
+
+          -# .panel-footer.panel-footer-transparent
+          -#   .heading-elements
+          -#     %a.heading-text.text-default{:href => ""}
+          -#       %i.icon-thumbs-up3.position-left
+          -#       38
+          -#     %a.heading-text.text-default.pull-right{:href => ""}
+          -#       %i.icon-eye8.position-left
+          -#       148
+
+  .row
+    .col-md-12
+      .panel.panel-body.border-top-teal.text-center
+        = will_paginate(@products)
+
+- else
+  %h1.text-light.text-center No product available!

@@ -1,0 +1,73 @@
+.sidebar.sidebar-main.sidebar-default
+  .sidebar-content
+
+    .category-title.h6
+      %span MERCHANT MANAGEMENT
+
+    .sidebar-category.sidebar-category-visible
+      .category-content.no-padding
+        %ul.navigation.navigation-main.navigation-accordion
+
+          %li.navigation-header
+            %span Merchant Activities
+            %i.icon-menu{:title => "Merchant Activities"}
+          %li
+            - if params[:business_id]
+              = link_to business_merchant_orders_path(params[:business_id]) do
+                %i.icon-compose
+                %span Orders
+            - else
+              = link_to business_merchant_orders_path(params[:id]) do
+                %i.icon-compose
+                %span Orders
+          %li
+            - if params[:business_id]
+              = link_to business_merchant_products_path(params[:business_id]) do
+                %i.icon-portfolio
+                %span Products
+            - else
+              = link_to business_merchant_products_path(params[:id]) do
+                %i.icon-portfolio
+                %span Products
+
+          %li.navigation-header
+            %span Merchant Bank
+            %i.icon-menu{:title => "Merchant Bank"}
+          %li
+            - if params[:business_id]
+              = link_to business_merchant_banks_path(params[:business_id]) do
+                %i.icon-coins
+                %span Bank statements
+            - else
+              = link_to business_merchant_banks_path(params[:id]) do
+                %i.icon-coins
+                %span Bank statements
+          %li
+            - if params[:business_id]
+              = link_to business_merchant_withdrawals_path(params[:business_id]) do
+                %i.icon-database-export
+                %span Withdrawals
+            - else
+              = link_to business_merchant_withdrawals_path(params[:id]) do
+                %i.icon-database-export
+                %span Withdrawals
+
+          %li.navigation-divider
+          %li
+            - if params[:business_id]
+              = link_to business_merchant_conversations_path(params[:business_id]) do
+                %i.icon-bubbles4
+                %span Conversations
+            - else
+              = link_to business_merchant_conversations_path(params[:id]) do
+                %i.icon-bubbles4
+                %span Conversations
+          %li
+            - if params[:business_id]
+              = link_to edit_business_path(params[:business_id]) do
+                %i.icon-cog5
+                %span Account settings
+            - else
+              = link_to edit_business_path(params[:id]) do
+                %i.icon-cog5
+                %span Account settings

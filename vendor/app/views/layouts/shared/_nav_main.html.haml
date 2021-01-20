@@ -1,0 +1,34 @@
+/ Second navbar
+#navbar-second.navbar.navbar-default
+  .navbar-boxed
+    %ul.nav.navbar-nav.no-border.visible-xs-block
+      %li
+        %a.text-center.collapsed{"data-target" => "#navbar-second-toggle", "data-toggle" => "collapse"}
+          %i.icon-menu7
+    #navbar-second-toggle.navbar-collapse.collapse
+      %ul.nav.navbar-nav
+
+        %li
+          = link_to root_path do
+            %i.icon-home.position-left
+            Home
+        %li
+          = link_to products_path do
+            %i.icon-file-empty.position-left
+            Products
+
+        = render partial: "layouts/shared/nav_main/categories"
+
+        %li
+          = link_to businesses_path do
+            %i.icon-store2.position-left
+            Businesses
+
+        = render partial: "layouts/shared/nav_main/lists"
+
+        %li
+          = link_to search_people_path do
+            %i.icon-users4.position-left
+            People
+
+      = render partial: "layouts/shared/nav_main/right"

@@ -1,0 +1,10 @@
+.col-lg-3
+  .thumbnail
+    .thumb.thumb-rounded
+      - if person.avatar.present?
+        = image_tag person.avatar
+      - else
+        = image_tag "default_person_avatar.png"
+    .caption.text-center
+      %h6.text-light.no-margin
+        = person.full_name

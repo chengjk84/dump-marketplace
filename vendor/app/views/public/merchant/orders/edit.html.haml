@@ -1,0 +1,106 @@
+- content_for :body_class, "layout-boxed"
+
+- content_for :render_partial_sidebar do
+  = render partial: "layouts/shared/sidebar/merchant"
+%h1.text-light Order Management
+
+- if params[:current] == "3"
+
+  .panel.panel-flat
+
+    .panel-heading
+      %h2.panel-title Edit Shipment Total
+
+    .panel-body
+      = form_for([@business, :merchant, @order]) do |f|
+
+        = f.hidden_field :status_id, value: @order.status_id + 1
+
+        .form-group
+          %label Current shipment fees
+          .input-group
+            %span.input-group-addon RM
+            = f.text_field :shipment, placeholder: "0.00", readonly: "readonly", class: "form-control input-lg"
+
+        .form-group
+          %label New combined shipment fees
+          .input-group
+            %span.input-group-addon RM
+            = f.text_field :shipment, placeholder: "0.00", class: "form-control input-lg"
+
+        .text-right
+          = f.button type: "submit", class: "btn btn-primary btn-xlg" do
+            Confirm Order
+            %i.icon-pencil5.position-right
+
+- if params[:current] == "5"
+
+  .panel.panel-flat
+
+    .panel-heading
+      %h2.panel-title Enter Shipment Information
+
+    .panel-body
+      = form_for([@business, :merchant, @order]) do |f|
+
+        = f.hidden_field :status_id, value: @order.status_id + 1
+        = f.hidden_field :shipped_at, value: DateTime.now
+
+        .form-group.has-feedback.has-feedback-left
+          %label Shipment Service:
+          = f.text_field :shipment_service, placeholder: "Eg. PosLaju / SkyNet", class: "form-control input-lg"
+          .form-control-feedback
+            %i.icon-address-book
+
+        .form-group.has-feedback.has-feedback-left
+          %label Tracking No.:
+          = f.text_field :shipment_tracking_no, placeholder: "Eg. EF123456789MY", class: "form-control input-lg"
+          .form-control-feedback
+            %i.icon-address-book
+
+        .form-group.has-feedback.has-feedback-left
+          %label Tracking URL:
+          = f.text_field :shipment_checking_url, placeholder: "Eg. http://poslaju.com.my/track-trace-v2/", class: "form-control input-lg"
+          .form-control-feedback
+            %i.icon-address-book
+
+        .text-right
+          = f.button type: "submit", class: "btn btn-primary btn-xlg" do
+            Confirm Shipment
+            %i.icon-pencil5.position-right
+
+- if params[:current] == "8"
+
+  .panel.panel-flat
+
+    .panel-heading
+      %h2.panel-title Enter Replacement Shipment Information
+
+    .panel-body
+      = form_for([@business, :merchant, @order]) do |f|
+
+        = f.hidden_field :status_id, value: @order.status_id - 2
+        = f.hidden_field :shipped_at, value: DateTime.now
+
+        .form-group.has-feedback.has-feedback-left
+          %label Shipment Service:
+          = f.text_field :shipment_service, placeholder: "Eg. PosLaju / SkyNet", class: "form-control input-lg"
+          .form-control-feedback
+            %i.icon-address-book
+
+        .form-group.has-feedback.has-feedback-left
+          %label Tracking No.:
+          = f.text_field :shipment_tracking_no, placeholder: "Eg. EF123456789MY", class: "form-control input-lg"
+          .form-control-feedback
+            %i.icon-address-book
+
+        .form-group.has-feedback.has-feedback-left
+          %label Tracking URL:
+          = f.text_field :shipment_checking_url, placeholder: "Eg. http://poslaju.com.my/track-trace-v2/", class: "form-control input-lg"
+          .form-control-feedback
+            %i.icon-address-book
+
+        .text-right
+          = f.button type: "submit", class: "btn btn-primary btn-xlg" do
+            Confirm Shipment
+            %i.icon-pencil5.position-right

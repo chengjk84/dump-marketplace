@@ -1,0 +1,21 @@
+.navbar.navbar-default.navbar-fixed-bottom.footer
+  .footer-boxed.text-muted
+    %ul.nav.navbar-nav.visible-xs-block
+      %li
+        %a.text-center.collapsed{"data-target" => "#footer", "data-toggle" => "collapse"}
+          %i.icon-circle-up2
+    #footer.navbar-collapse.collapse
+      .navbar-text
+        &copy; 2016 Atlantis. All Rights Reserved.
+      .navbar-right
+        %ul.nav.navbar-nav
+          %li
+            = link_to "About", "/pages/about"
+          %li
+            = link_to "Terms & Conditions", "/pages/about"
+          %li
+            = link_to "Privacy Policy", "/pages/about"
+          %li
+            = link_to "Contact Us", "/pages/about"
+          %li
+            = link_to "FAQ", "/pages/faq"

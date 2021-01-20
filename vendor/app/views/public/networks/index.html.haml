@@ -1,0 +1,136 @@
+- content_for :body_class, "layout-boxed"
+
+- content_for :render_partial_sidebar do
+  = render partial: "layouts/shared/sidebar/people"
+
+%h1.text-light Sponsee's Networks
+
+-if @first.present?
+  .row
+    %h3.text-light Level 1
+    - @first.each do |person|
+      .col-lg-2
+        .thumbnail
+          .thumb
+            - if person.avatar.present?
+              = image_tag person.avatar
+            - else
+              = image_tag "default_person_avatar.png"
+            .caption-overflow
+              %span
+                - if current_person.friendships.find_by_friend_id(person).present?
+                  = button_to person_friendship_path(current_person, person), :method => :delete, class: "btn btn-flat border-white text-white btn-rounded btn-icon" do
+                    %i.icon-minus2
+                - else
+                  = button_to person_friendships_path(current_person, :friend_id => person), :method => :post, class: "btn btn-flat border-white text-white btn-rounded btn-icon" do
+                    %i.icon-plus2
+          .caption.text-center
+            .text-light.no-margin
+              = person.first_name
+
+  - if @second.present?
+    %h3.text-light Level 2
+    .row
+      - @second.each do |person|
+        .col-lg-2
+          .thumbnail
+            .thumb
+              - if person.avatar.present?
+                = image_tag person.avatar
+              - else
+                = image_tag "default_person_avatar.png"
+              .caption-overflow
+                %span
+                  - if current_person.friendships.find_by_friend_id(person).present?
+                    = button_to person_friendship_path(current_person, person), :method => :delete, class: "btn btn-flat border-white text-white btn-rounded btn-icon" do
+                      %i.icon-minus2
+                  - else
+                    = button_to person_friendships_path(current_person, :friend_id => person), :method => :post, class: "btn btn-flat border-white text-white btn-rounded btn-icon" do
+                      %i.icon-plus2
+            .caption.text-center
+              .text-light.no-margin
+                = person.first_name
+
+    - if @third.present?
+      %h3.text-light Level 3
+      .row
+        - @third.each do |person|
+          .col-lg-2
+            .thumbnail
+              .thumb
+                - if person.avatar.present?
+                  = image_tag person.avatar
+                - else
+                  = image_tag "default_person_avatar.png"
+                .caption-overflow
+                  %span
+                    - if current_person.friendships.find_by_friend_id(person).present?
+                      = button_to person_friendship_path(current_person, person), :method => :delete, class: "btn btn-flat border-white text-white btn-rounded btn-icon" do
+                        %i.icon-minus2
+                    - else
+                      = button_to person_friendships_path(current_person, :friend_id => person), :method => :post, class: "btn btn-flat border-white text-white btn-rounded btn-icon" do
+                        %i.icon-plus2
+              .caption.text-center
+                .text-light.no-margin
+                  = person.first_name
+
+      - if @forth.present?
+        %h3.text-light Level 4
+        .row
+          - @forth.each do |person|
+            .col-lg-2
+              .thumbnail
+                .thumb
+                  - if person.avatar.present?
+                    = image_tag person.avatar
+                  - else
+                    = image_tag "default_person_avatar.png"
+                  .caption-overflow
+                    %span
+                      - if current_person.friendships.find_by_friend_id(person).present?
+                        = button_to person_friendship_path(current_person, person), :method => :delete, class: "btn btn-flat border-white text-white btn-rounded btn-icon" do
+                          %i.icon-minus2
+                      - else
+                        = button_to person_friendships_path(current_person, :friend_id => person), :method => :post, class: "btn btn-flat border-white text-white btn-rounded btn-icon" do
+                          %i.icon-plus2
+                .caption.text-center
+                  .text-light.no-margin
+                    = person.first_name
+
+        - if @fifth.present?
+          %h3.text-light Level 5
+          .row
+            - @fifth.each do |person|
+              .col-lg-2
+                .thumbnail
+                  .thumb
+                    - if person.avatar.present?
+                      = image_tag person.avatar
+                    - else
+                      = image_tag "default_person_avatar.png"
+                    .caption-overflow
+                      %span
+                        - if current_person.friendships.find_by_friend_id(person).present?
+                          = button_to person_friendship_path(current_person, person), :method => :delete, class: "btn btn-flat border-white text-white btn-rounded btn-icon" do
+                            %i.icon-minus2
+                        - else
+                          = button_to person_friendships_path(current_person, :friend_id => person), :method => :post, class: "btn btn-flat border-white text-white btn-rounded btn-icon" do
+                            %i.icon-plus2
+                  .caption.text-center
+                    .text-light.no-margin
+                      = person.first_name
+
+        - else
+          %h3.text-light= "Level 5 Sponsee not found" if @fifth
+
+      - else
+        %h3.text-light= "Level 4 Sponsee not found" if @forth
+
+    - else
+      %h3.text-light Level 3 Sponsee not found
+
+  - else
+    %h3.text-light Level 2 Sponsee not found
+
+- else
+  %h3.text-light Sponsee not found

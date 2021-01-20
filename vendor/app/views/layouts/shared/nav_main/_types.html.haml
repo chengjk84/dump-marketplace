@@ -1,0 +1,10 @@
+%li.dropdown
+  %a.dropdown-toggle{"data-toggle" => "dropdown", :href => "boxed_default.html#"}
+    %i.icon-stack2.position-left
+    Types
+    %span.caret
+  %ul.dropdown-menu.width-250
+    %li.dropdown-header Find business by type
+    - navigate_by_type.each do |type|
+      %li
+        = link_to type.name, "#{type.slug}"

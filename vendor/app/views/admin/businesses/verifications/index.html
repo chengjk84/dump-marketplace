@@ -1,0 +1,72 @@
+%h1.text-light People Management
+
+.panel.panel-default
+  .panel-heading
+    %h6.panel-title List of People waiting for Verification
+    .heading-elements
+      = form_tag admin_people_path, method: "get", class: "heading-form" do
+        .form-group.has-feedback
+          = text_field_tag :search, params[:search], placeholder: "Search by name", type: "search", class: "form-control"
+          .form-control-feedback
+            %i.icon-search4.text-size-base.text-muted
+
+
+  .table-responsive
+    %table.table
+      %thead
+        %tr
+          %th Avatar
+          %th Infomation
+          %th Address
+          %th I/C or Passport
+          %th Bank Information
+          %th.text-center{:style => "width: 30px;"}
+            %i.icon-menu
+
+      %tbody
+        - @people.each do |person|
+          %tr
+            %td
+              - if person.avatar.present?
+                = image_tag person.avatar, style: "width: 58px; height: 58px; border-radius: 2px;"
+              - else
+                = image_tag "default_person_avatar.png", style: "width: 58px; height: 58px; border-radius: 2px;"
+            %td
+              = person.full_name
+              %br
+              = person.email
+              %br
+              = person.mobile
+            %td
+              = person.street_1
+              %br
+              - if person.street_2.present?
+                = person.street_2
+                %br
+              = "#{person.postcode} #{person.city}"
+              %br
+              = "#{person.state}, #{person.country}"
+            %td
+              - if person.identification.present?
+                = person.identification
+                %br
+                - if person.identification_photo.present?
+                  = link_to "View IC or Passport Photo", person.identification_photo_url, target: '_blank'
+              - else
+                .text-center -
+            %td
+              - if person.bank_name.present? || person.bank_account_no.present? || person.bank_account_name.present?
+                = person.bank_name
+                %br
+                = person.bank_account_no
+                %br
+                = person.bank_account_name
+              - else
+                .text-center -
+            %td.text-center
+              = button_to admin_person_path(person), method: :patch, class: "btn btn-primary btn-icon" do
+                %i.icon-pencil5
+
+  .panel-footer
+    .heading-elements
+      = will_paginate @people

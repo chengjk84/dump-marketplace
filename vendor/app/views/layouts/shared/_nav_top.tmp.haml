@@ -1,0 +1,197 @@
+/ Main navbar
+.navbar.navbar-inverse.bg-atlantis
+  .navbar-boxed
+    .navbar-header
+      = link_to root_path, class: 'navbar-brand' do
+        = image_tag 'atlantis_shop.png', alt: 'We make life happening'
+
+      %ul.nav.navbar-nav.visible-xs-block
+        %li
+          %a{"data-target" => "#navbar-mobile", "data-toggle" => "collapse"}
+            %i.icon-tree5
+        %li
+          %a.sidebar-mobile-main-toggle
+            %i.icon-paragraph-justify3
+    #navbar-mobile.navbar-collapse.collapse
+      %ul.nav.navbar-nav
+        %li
+          %a.sidebar-control.sidebar-main-toggle.hidden-xs
+            %i.icon-paragraph-justify3
+        %li.dropdown
+          %a.dropdown-toggle{"data-toggle" => "dropdown", :href => "/"}
+            %i.icon-git-compare
+            %span.visible-xs-inline-block.position-right Git updates
+            %span.badge.bg-warning-400 9
+          .dropdown-menu.dropdown-content
+            .dropdown-content-heading
+              Git updates
+              %ul.icons-list
+                %li
+                  %a{:href => "/"}
+                    %i.icon-sync
+            %ul.media-list.dropdown-content-body.width-350
+              %li.media
+                .media-left
+                  %a.btn.border-primary.text-primary.btn-flat.btn-rounded.btn-icon.btn-sm{:href => "/"}
+                    %i.icon-git-pull-request
+                .media-body
+                  Drop the IE
+                  %a{:href => "/"} specific hacks
+                  for temporal inputs
+                  .media-annotation 4 minutes ago
+              %li.media
+                .media-left
+                  %a.btn.border-warning.text-warning.btn-flat.btn-rounded.btn-icon.btn-sm{:href => "/"}
+                    %i.icon-git-commit
+                .media-body
+                  Add full font overrides for popovers and tooltips
+                  .media-annotation 36 minutes ago
+              %li.media
+                .media-left
+                  %a.btn.border-info.text-info.btn-flat.btn-rounded.btn-icon.btn-sm{:href => "/"}
+                    %i.icon-git-branch
+                .media-body
+                  %a{:href => "/"} Chris Arney
+                  created a new
+                  %span.text-semibold Design
+                  branch
+                  .media-annotation 2 hours ago
+              %li.media
+                .media-left
+                  %a.btn.border-success.text-success.btn-flat.btn-rounded.btn-icon.btn-sm{:href => "/"}
+                    %i.icon-git-merge
+                .media-body
+                  %a{:href => "/"} Eugene Kopyov
+                  merged
+                  %span.text-semibold Master
+                  and
+                  %span.text-semibold Dev
+                  branches
+                  .media-annotation Dec 18, 18:36
+              %li.media
+                .media-left
+                  %a.btn.border-primary.text-primary.btn-flat.btn-rounded.btn-icon.btn-sm{:href => "/"}
+                    %i.icon-git-pull-request
+                .media-body
+                  Have Carousel ignore keyboard events
+                  .media-annotation Dec 12, 05:46
+            .dropdown-content-footer
+              %a{"data-popup" => "tooltip", :href => "/", :title => "All activity"}
+                %i.icon-menu.display-block
+      %p.navbar-text
+        %span.label.bg-success-400 Online
+      %ul.nav.navbar-nav.navbar-right
+        %li.dropdown.language-switch
+          %a.dropdown-toggle{"data-toggle" => "dropdown"}
+            %img.position-left{:alt => "", :src => "/assets/images/flags/gb.png"}/
+            English
+            %span.caret
+          %ul.dropdown-menu
+            %li
+              %a.deutsch
+                %img{:alt => "", :src => "/assets/images/flags/de.png"}/
+                Deutsch
+            %li
+              %a.ukrainian
+                %img{:alt => "", :src => "/assets/images/flags/ua.png"}/
+                Українська
+            %li
+              %a.english
+                %img{:alt => "", :src => "/assets/images/flags/gb.png"}/
+                English
+            %li
+              %a.espana
+                %img{:alt => "", :src => "/assets/images/flags/es.png"}/
+                España
+            %li
+              %a.russian
+                %img{:alt => "", :src => "/assets/images/flags/ru.png"}/
+                Русский
+        %li.dropdown
+          %a.dropdown-toggle{"data-toggle" => "dropdown", :href => "/"}
+            %i.icon-bubbles4
+            %span.visible-xs-inline-block.position-right Messages
+            %span.badge.bg-warning-400 2
+          .dropdown-menu.dropdown-content.width-350
+            .dropdown-content-heading
+              Messages
+              %ul.icons-list
+                %li
+                  %a{:href => "/"}
+                    %i.icon-compose
+            %ul.media-list.dropdown-content-body
+              %li.media
+                .media-left
+                  = image_tag "default_person_avatar.png", class: "img-circle img-sm"
+                  %span.badge.bg-danger-400.media-badge 5
+                .media-body
+                  %a.media-heading{:href => "/"}
+                    %span.text-semibold James Alexander
+                    %span.media-annotation.pull-right 04:58
+                  %span.text-muted who knows, maybe that would be the best thing for me...
+              %li.media
+                .media-left
+                  = image_tag "default_person_avatar.png", class: "img-circle img-sm"
+                  %span.badge.bg-danger-400.media-badge 4
+                .media-body
+                  %a.media-heading{:href => "/"}
+                    %span.text-semibold Margo Baker
+                    %span.media-annotation.pull-right 12:16
+                  %span.text-muted That was something he was unable to do because...
+              %li.media
+                .media-left
+                  = image_tag "default_person_avatar.png", class: "img-circle img-sm"
+                .media-body
+                  %a.media-heading{:href => "/"}
+                    %span.text-semibold Jeremy Victorino
+                    %span.media-annotation.pull-right 22:48
+                  %span.text-muted But that would be extremely strained and suspicious...
+              %li.media
+                .media-left
+                  = image_tag "default_person_avatar.png", class: "img-circle img-sm"
+                .media-body
+                  %a.media-heading{:href => "/"}
+                    %span.text-semibold Beatrix Diaz
+                    %span.media-annotation.pull-right Tue
+                  %span.text-muted What a strenuous career it is that I've chosen...
+              %li.media
+                .media-left
+                  = image_tag "default_person_avatar.png", class: "img-circle img-sm"
+                .media-body
+                  %a.media-heading{:href => "/"}
+                    %span.text-semibold Richard Vango
+                    %span.media-annotation.pull-right Mon
+                  %span.text-muted Other travelling salesmen live a life of luxury...
+            .dropdown-content-footer
+              %a{"data-popup" => "tooltip", :href => "/", :title => "All messages"}
+                %i.icon-menu.display-block
+
+        %li.dropdown.dropdown-user
+          %a.dropdown-toggle{"data-toggle" => "dropdown"}
+            = image_tag "default_person_avatar.png"
+            %span JinKang
+            %i.caret
+          %ul.dropdown-menu.dropdown-menu-right
+            %li
+              %a{:href => "/"}
+                %i.icon-user-plus
+                My profile
+            %li
+              %a{:href => "/"}
+                %i.icon-coins
+                My balance
+            %li
+              %a{:href => "/"}
+                %span.badge.bg-teal-400.pull-right 58
+                %i.icon-comment-discussion
+                Messages
+            %li.divider
+            %li
+              %a{:href => "/"}
+                %i.icon-cog5
+                Account settings
+            %li
+              %a{:href => "/"}
+                %i.icon-switch2
+                Logout
+/ /main navbar

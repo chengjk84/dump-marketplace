@@ -1,0 +1,70 @@
+.sidebar.sidebar-main.sidebar-default
+  .sidebar-content
+
+    .sidebar-category.sidebar-category-visible
+      .category-content
+        = form_tag search_people_path, method: "get", class: "heading-form" do
+          .form-group.has-feedback
+            = text_field_tag :search, params[:search], placeholder: "Search by name", type: "search", class: "form-control"
+            .form-control-feedback
+              %i.icon-search4.text-size-base.text-muted
+      %br
+      %br
+      .clearfix
+
+  .sidebar-content
+
+    .category-title.h6
+      %span Find by state
+      %ul.icons-list
+
+    .sidebar-category.sidebar-category-visible
+      .category-content.no-padding
+        %ul.navigation.navigation-main.navigation-accordion
+          %li
+            = link_to search_people_path(state: "Perlis") do
+              %span Perlis
+          %li
+            = link_to search_people_path(state: "Kedah") do
+              %span Kedah
+          %li
+            = link_to search_people_path(state: "Penang") do
+              %span Penang
+          %li
+            = link_to search_people_path(state: "Perak") do
+              %span Perak
+          %li
+            = link_to search_people_path(state: "Selangor") do
+              %span Selangor
+          %li
+            = link_to search_people_path(state: "Negeri Sembilan") do
+              %span Negeri Sembilan
+          %li
+            = link_to search_people_path(state: "Melaka") do
+              %span Melaka
+          %li
+            = link_to search_people_path(state: "Johor") do
+              %span Johor
+          %li
+            = link_to search_people_path(state: "Pahang") do
+              %span Pahang
+          %li
+            = link_to search_people_path(state: "Terengganu") do
+              %span Terengganu
+          %li
+            = link_to search_people_path(state: "Sabah") do
+              %span Sabah
+          %li
+            = link_to search_people_path(state: "Sarawak") do
+              %span Sarawak
+          %li
+            = link_to search_people_path(state: "Kuala Lumpur") do
+              %span Kuala Lumpur
+          %li
+            = link_to search_people_path(state: "Putrajaya") do
+              %span Putrajaya
+          %li
+            = link_to search_people_path(state: "Labuan") do
+              %span Labuan
+
+.clearfix

@@ -1,0 +1,162 @@
+- content_for :body_class, "layout-boxed"
+
+- content_for :render_partial_sidebar do
+  = render partial: "layouts/shared/sidebar/merchant"
+
+.panel.panel-white
+  .panel-heading
+    %h6.panel-title= @business.name
+    .heading-elements
+      .btn-toolbar
+        - if @order.status_id == 3
+          = link_to edit_business_merchant_order_path(@business, @order, current: @order.status_id), class: "btn btn-default btn-xs heading-btn" do
+            %i.icon-heart5.position-left
+            Edit Shipment Total
+
+        - elsif @order.status_id == 4
+          = link_to "", method: :patch, class: "btn btn-default btn-xs heading-btn" do
+            %i.icon-spinner.position-left
+            Waiting for customer to make payment
+
+        - elsif @order.status_id == 5
+          = link_to edit_business_merchant_order_path(@business, @order, current: @order.status_id), class: "btn btn-default btn-xs heading-btn" do
+            %i.icon-heart5.position-left
+            Create Shipment Information
+
+        - elsif @order.status_id == 6
+          = link_to "", method: :patch, class: "btn btn-default btn-xs heading-btn" do
+            %i.icon-spinner.position-left
+            Waiting for customer response
+
+          - if @order.updated_at > DateTime.now
+            .btn-group
+              = button_to business_merchant_order_path(@business, @order, status: @order.status_id + 1), method: :patch, class: "btn btn-default btn-xs heading-btn" do
+                %i.icon-heart5.position-left
+                Mark as Completed
+
+        - elsif @order.status_id == 7
+          = link_to "", method: :patch, class: "btn btn-default btn-xs heading-btn" do
+            %i.icon-heart5.position-left
+            Thank You!
+
+        - elsif @order.status_id == 8
+          = link_to edit_business_merchant_order_path(@business, @order, current: @order.status_id), class: "btn btn-default btn-xs heading-btn" do
+            %i.icon-heart5.position-left
+            Create Shipment Information
+
+          .btn-group
+            = button_to business_merchant_order_path(@business, @order, status: 9), method: :delete, class: "btn btn-default btn-xs heading-btn" do
+              %i.icon-heart5.position-left
+              Cancel Order
+
+  .panel-body.no-padding-bottom
+    .row
+      .col-sm-6.content-group
+        - if @business.logo.present?
+          = image_tag @business.logo, class: "content-group mt-10", style: "width: 120px"
+        %ul.list-condensed.list-unstyled
+          %li
+            %span.text-semibold= "GST NO: #{@business.gst_no}"
+          %li= "#{@business.street_1},"
+          -if @business.street_2.present?
+            %li= "#{@business.street_2},"
+          %li= "#{@business.postcode} #{@business.city},"
+          %li= "#{@business.state}, #{@business.country}."
+          %li= "TEL: #{@business.mobile}"
+
+      .col-sm-6.content-group
+        .invoice-details
+          %h5.text-uppercase.text-semibold= "Order ID ##{@order.id}"
+          %ul.list-condensed.list-unstyled
+            -if @order.ordered_at.present?
+              %li
+                Order Date:
+                %span.text-semibold= @order.ordered_at.strftime("%B %d, %Y")
+            - if @order.paid_at.present?
+              %li
+                Payment Date:
+                %span.text-semibold= @order.paid_at.strftime("%B %d, %Y")
+            - if @order.returned_at.present?
+              %li
+                Return Date:
+                %span.text-semibold= @order.returned_at.strftime("%B %d, %Y")
+    .row
+      .col-md-6.col-lg-8.content-group
+        %span.text-muted Billing and Shipping to:
+        %ul.list-condensed.list-unstyled
+          %li
+            %h5= @person.full_name
+          %li= "#{@person.street_1},"
+          - if @person.street_2.present?
+            %li= "#{@person.street_2},"
+          %li= "#{@person.postcode} #{@person.city},"
+          %li= "#{@person.state}, #{@person.country}."
+          %li= "TEL: #{@person.mobile}"
+
+      .col-md-6.col-lg-4.content-group
+        %span.text-muted Payment and Shipment Details:
+        %ul.list-condensed.list-unstyled.invoice-payment-details
+          %li
+            %h5
+              Status:
+              %span.text-right.text-semibold= @order.status.name
+          %li
+            Shipment Service.:
+            %span.text-semibold= @order.shipment_service
+          - if @order.shipped_at.present?
+            %li
+              Shipment Date:
+              %span.text-semibold= @order.shipped_at.strftime("%B %d, %Y")
+          %li
+            Tracking No.:
+            %span.text-semibold= @order.shipment_tracking_no
+          %li
+            Tracking URL:
+            %span
+              - if @order.shipment_checking_url.present?
+                = link_to "CLICK HERE", @order.shipment_checking_url, target: "_blank"
+
+
+  .table-responsive
+    %table.table.table-lg
+      %thead
+        %tr
+          %th Product
+          %th.col-sm-2 Price
+          %th.col-sm-2 Quantity
+          %th.col-sm-2 Amount
+      %tbody
+
+        - @order.items.each do |item|
+          %tr
+            %td
+              %h6.no-margin= item.product.name
+            %td= item.unit_price
+            %td= item.quantity
+            %td
+              %span.text-semibold= item.total_price
+
+  .panel-body
+    .row.invoice-payment
+      .col-sm-7
+        .content-group
+          .mb-15.mt-15
+            = image_tag @order.qr_code, class: "display-block", style: "width: 150px"
+
+      .col-sm-5
+        .content-group
+          %h6 Total due
+          .table-responsive.no-border
+            %table.table
+              %tbody
+                %tr
+                  %th Subtotal:
+                  %td.text-right= @order.subtotal
+                %tr
+                  %th
+                    Shipment:
+                  %td.text-right= @order.shipment
+                %tr
+                  %th Total:
+                  %td.text-right.text-primary
+                    %h5.text-semibold= @order.total

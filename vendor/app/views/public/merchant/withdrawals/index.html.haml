@@ -1,0 +1,52 @@
+- content_for :body_class, "layout-boxed"
+
+- content_for :render_partial_sidebar do
+  = render partial: "layouts/shared/sidebar/merchant"
+
+%h1.text-light Merchant's Credit Withdrawals
+
+.row
+  .col-md-12
+    .panel.panel-flat
+      .panel-heading
+        %h6.panel-title Income Withdrawals
+        .heading-elements
+          = link_to new_business_merchant_withdrawal_path(@business), class: "btn btn-primary btn-labeled heading-btn" do
+            %b
+              %i.icon-plus3
+            Request for credit withdrawal
+
+      .table-responsive
+        %table.table.text-nowrap
+          %thead
+            %tr
+              %th Description
+              %th.col-md-2 Reference No.
+              %th.col-md-2 Credit
+              %th.col-md-2 Status
+          %tbody
+
+            - @statements.each do |statement|
+              %tr
+                %td
+                  .text-default.text-semibold= statement.description
+                  .text-muted.text-size-small= statement.updated_at
+                %td
+                  %span.text-muted= statement.ref_no
+                %td
+                  - if statement.credit.present?
+                    %h6.text-semibold.text-danger-600= number_to_currency(statement.credit, unit: "RM", separator: ".", delimiter: ",", format: "%u %n")
+                  - else
+                    %h6.text-semibold.text-danger-600
+                      \-
+                %td
+                  - if statement.status == "success"
+                    %span.label.bg-success= statement.status
+                  - if statement.status == "request"
+                    %span.label.bg-warning= statement.status
+                  - if statement.status == "cancel"
+                    %span.label.bg-danger= statement.status
+
+      .panel-footer
+        .heading-elements
+          = will_paginate @statements

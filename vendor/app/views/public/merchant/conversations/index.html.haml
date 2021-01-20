@@ -1,0 +1,40 @@
+- content_for :body_class, "layout-boxed"
+
+- content_for :render_partial_sidebar do
+  = render partial: "layouts/shared/sidebar/merchant"
+
+- if @conversations.present?
+  .col-lg-4
+    .panel.panel-flat
+      .panel-heading
+        %h6.panel-title People Contacts
+        .heading-elements
+          %span.badge.badge-success.heading-text= "Total: #{@conversations.count}"
+
+      %ul.media-list.media-list-linked.pb-5
+
+        - @conversations.each do |conversation|
+          %li.media
+            %a.media-link{:href => "/businesses/#{conversation.business.id}/merchant/conversations/#{conversation.id}"}
+              .media-left
+                - if conversation.person.avatar.present?
+                  = image_tag conversation.person.avatar, class: "img-circle"
+                - else
+                  = image_tag "default_business_logo.png", class: "img-circle"
+              .media-body
+                %span.media-heading.text-semibold= conversation.person.full_name
+                %span.media-annotation= conversation.person.email
+              .media-right.media-middle
+                - if conversation.person_response
+                  %span.status-mark.bg-success
+                - else
+                  %span.status-mark.bg-grey
+
+
+  .col-lg-8
+    %h3.text-light.text-center= "Messaging go here!"
+
+
+
+- else
+  %h6.text-light= "No contact and conversations recorded."

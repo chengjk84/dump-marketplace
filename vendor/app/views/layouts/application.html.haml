@@ -1,0 +1,45 @@
+!!!
+%html{:lang => "en"}
+  %head
+    %meta{:charset => "utf-8"}/
+    %meta{:content => "IE=edge", "http-equiv" => "X-UA-Compatible"}/
+    %meta{:content => "width=device-width, initial-scale=1", :name => "viewport"}/
+
+    %title Atlantis - We make life happening
+
+    = csrf_meta_tags
+    = stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload'
+    = javascript_include_tag 'application', 'data-turbolinks-track': 'reload'
+
+  %body{:class => "#{yield(:body_class)}"}
+
+    = render partial: "layouts/shared/nav_top"
+
+    = render partial: "layouts/shared/nav_main"
+
+    = yield :page_header
+
+    .page-container
+      .page-content
+
+        = yield :render_partial_sidebar
+
+        .content-wrapper
+
+          - if flash[:notice]
+            .alert.alert-success.alert-bordered
+              %button.close{"data-dismiss" => "alert", :type => "button"}
+                %span ×
+                %span.sr-only Close
+              = raw flash[:notice]
+
+          - if flash[:alert]
+            .alert.alert-danger.alert-bordered
+              %button.close{"data-dismiss" => "alert", :type => "button"}
+                %span ×
+                %span.sr-only Close
+              = raw flash[:alert]
+
+          = yield
+
+    = render partial: "layouts/shared/nav_bottom"

@@ -1,0 +1,77 @@
+- content_for :body_class, "layout-boxed"
+
+- content_for :render_partial_sidebar do
+  = render partial: "layouts/shared/sidebar/admin"
+
+%h1.text-light Businesses Management
+
+.panel.panel-default
+  .panel-heading
+    %h6.panel-title List of business waiting for verification
+    .heading-elements
+      = form_tag admin_businesses_verifications_path, method: "get", class: "heading-form" do
+        .form-group.has-feedback
+          = text_field_tag :search, params[:search], placeholder: "Search by name", type: "search", class: "form-control"
+          .form-control-feedback
+            %i.icon-search4.text-size-base.text-muted
+
+
+  .table-responsive
+    %table.table
+      %thead
+        %tr
+          %th Logo
+          %th Infomation
+          %th Address
+          %th I/C or Passport
+          %th Bank Information
+          %th.text-center{:style => "width: 30px;"}
+            %i.icon-menu
+
+      %tbody
+        - @businesses.each do |business|
+          %tr
+            %td
+              - if business.logo.present?
+                = image_tag business.logo, style: "width: 58px; height: 58px; border-radius: 2px;"
+              - else
+                = image_tag "default_person_avatar.png", style: "width: 58px; height: 58px; border-radius: 2px;"
+            %td
+              = business.name
+              %br
+              = business.email
+              %br
+              = business.mobile
+            %td
+              = business.street_1
+              %br
+              - if business.street_2.present?
+                = business.street_2
+                %br
+              = "#{business.postcode} #{business.city}"
+              %br
+              = "#{business.state}, #{business.country}"
+            %td
+              - if business.certificate_id.present?
+                = business.certificate_id
+                %br
+                - if business.certificate_photo.present?
+                  = link_to "View certificate photo", business.certificate_photo_url, target: '_blank'
+              - else
+                .text-center -
+            %td
+              - if business.bank_name.present? || business.bank_account_no.present? || business.bank_account_name.present?
+                = business.bank_name
+                %br
+                = business.bank_account_no
+                %br
+                = business.bank_account_name
+              - else
+                .text-center -
+            %td.text-center
+              = button_to admin_businesses_verification_path(business), method: :patch, class: "btn btn-primary btn-icon" do
+                %i.icon-pencil5
+
+  .panel-footer
+    .heading-elements
+      = will_paginate @businesses

@@ -1,0 +1,68 @@
+.sidebar.sidebar-main.sidebar-default
+  .sidebar-content
+
+    .category-title.h6
+      %span My Management
+
+    .sidebar-category.sidebar-category-visible
+      .category-content.no-padding
+        %ul.navigation.navigation-main.navigation-accordion
+          %li.navigation-header
+            %span MY ACTIVITIES
+            %i.icon-menu{:title => "Actions"}
+          %li
+            = link_to person_path(current_person) do
+              %i.icon-heart6
+              %span Favorites
+          %li
+            = link_to person_collections_path(current_person) do
+              %i.icon-drawer3
+              %span Collections
+          %li
+            = link_to person_networks_path(current_person) do
+              %i.icon-tree7
+              %span Networks
+          %li
+            = link_to person_friendships_path(current_person) do
+              %i.icon-users4
+              %span Friends
+
+          %li.navigation-header
+            %span MY BILLING
+            %i.icon-menu{:title => "Wallets"}
+
+          %li
+            = link_to person_carts_path(current_person) do
+              %i.icon-cart5
+              %span Shoping Cart
+
+            %li
+              = link_to person_orders_path(current_person) do
+                %i.icon-compose
+                %span Orders
+          -# %li
+          -#   = link_to person_subscriptions_path(current_person) do
+          -#     %i.icon-price-tags2
+          -#     %span Subscriptions
+
+          %li.navigation-header
+            %span MY WALLET
+            %i.icon-menu{:title => "Wallets"}
+          %li
+            = link_to person_wallets_path(current_person) do
+              %i.icon-coins
+              %span Cash wallet
+          %li
+            = link_to person_rewards_path(current_person) do
+              %i.icon-credit-card
+              %span Reward point
+
+          %li.navigation-divider
+          %li
+            = link_to person_conversations_path(current_person) do
+              %i.icon-bubbles4
+              %span Conversations
+          %li
+            = link_to edit_person_path(current_person) do
+              %i.icon-cog5
+              %span Account settings

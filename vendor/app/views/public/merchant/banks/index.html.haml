@@ -1,0 +1,81 @@
+- content_for :body_class, "layout-boxed"
+
+- content_for :render_partial_sidebar do
+  = render partial: "layouts/shared/sidebar/merchant"
+
+%h1.text-light Merchant Bank
+
+.row
+  .col-lg-6
+    .panel.bg-success-800
+      .panel-body
+        %h3.no-margin= number_to_currency(@bank.success, unit: "RM", separator: ".", delimiter: ",", format: "%u %n")
+        Total success credit
+
+  .col-lg-6
+    .panel.bg-warning-800
+      .panel-body
+        %h3.no-margin= number_to_currency(@bank.pending, unit: "RM", separator: ".", delimiter: ",", format: "%u %n")
+        Total pending credit
+
+
+.panel.panel-flat
+  .panel-heading
+    %h6.panel-title Income Statements
+    .heading-elements
+      %span.label.bg-success.heading-text
+        = @statements.where(status: "success").count
+        success
+      %span.label.bg-warning.heading-text
+        = @statements.where(status: "pending").count
+        pending
+      %span.label.bg-warning.heading-text
+        = @statements.where(status: "request").count
+        request
+      %span.label.bg-danger.heading-text
+        = @statements.where(status: "cancel").count
+        cancel
+
+  .table-responsive
+    %table.table.text-nowrap
+      %thead
+        %tr
+          %th Description
+          %th.col-md-2 Reference No.
+          %th.col-md-2 Debit
+          %th.col-md-2 Credit
+          %th.col-md-2 Status
+      %tbody
+
+        - @statements.each do |statement|
+          %tr
+            %td
+              .text-default.text-semibold= statement.description
+              .text-muted.text-size-small= statement.updated_at
+            %td
+              %span.text-muted= statement.ref_no
+            %td
+              - if statement.debit.present?
+                %h6.text-semibold.text-success-600= number_to_currency(statement.debit, unit: "RM", separator: ".", delimiter: ",", format: "%u %n")
+              - else
+                %h6.text-semibold.text-success-600
+                  \-
+            %td
+              - if statement.credit.present?
+                %h6.text-semibold.text-danger-600= number_to_currency(statement.credit, unit: "RM", separator: ".", delimiter: ",", format: "%u %n")
+              - else
+                %h6.text-semibold.text-danger-600
+                  \-
+            %td
+              - if statement.status == "success"
+                %span.label.bg-success= statement.status
+              - if statement.status == "pending"
+                %span.label.bg-warning= statement.status
+              - if statement.status == "request"
+                %span.label.bg-warning= statement.status
+              - if statement.status == "cancel"
+                %span.label.bg-danger= statement.status
+
+  .panel-footer
+    .heading-elements
+      = will_paginate @statements

@@ -1,0 +1,74 @@
+= content_for :body_class, "layout-boxed login-container"
+
+= form_for @person, url: auth_registrations_path(@person) do |f|
+
+  .panel.panel-body.login-form
+    .text-center
+      .icon-object.border-success.text-success
+        %i.icon-plus3
+      %h5.content-group
+        Create account
+        %small.display-block All fields are required
+
+    .content-divider.text-muted.form-group
+      %span Your credentials
+
+    .form-group.has-feedback.has-feedback-left
+      = f.text_field :first_name, placeholder: "First name", class: "form-control"
+      .form-control-feedback
+        %i.icon-user.text-muted
+      - if @person.errors[:first_name].present?
+        %span.help-block.text-danger
+          %i.icon-cancel-circle2.position-left
+          = @person.errors[:first_name].first
+
+    .form-group.has-feedback.has-feedback-left
+      = f.text_field :last_name, placeholder: "Last name", class: "form-control"
+      .form-control-feedback
+        %i.icon-user.text-muted
+      - if @person.errors[:last_name].present?
+        %span.help-block.text-danger
+          %i.icon-cancel-circle2.position-left
+          = @person.errors[:last_name].first
+
+    .content-divider.text-muted.form-group
+      %span Your privacy
+
+    .form-group.has-feedback.has-feedback-left
+      = f.text_field :email, placeholder: "Email address", class: "form-control"
+      .form-control-feedback
+        %i.icon-mention.text-muted
+      - if @person.errors[:email].present?
+        %span.help-block.text-danger
+          %i.icon-cancel-circle2.position-left
+          = @person.errors[:email].first
+
+    .form-group.has-feedback.has-feedback-left
+      = f.password_field :password, placeholder: "Password", class: "form-control"
+      .form-control-feedback
+        %i.icon-lock2.text-muted
+      - if @person.errors[:password].present?
+        %span.help-block.text-danger
+          %i.icon-cancel-circle2.position-left
+          = @person.errors[:password].first
+
+    .form-group.has-feedback.has-feedback-left
+      = f.password_field :password_confirmation, placeholder: "Password", class: "form-control"
+      .form-control-feedback
+        %i.icon-lock2.text-muted
+      - if @person.errors[:password_confirmation].present?
+        %span.help-block.text-danger
+          %i.icon-cancel-circle2.position-left
+          = @person.errors[:password_confirmation].first
+
+    = f.button type: "submit", class: "btn bg-teal btn-block btn-lg" do
+      Register
+      %i.icon-add.position-right
+
+    %p
+
+    %span.help-block.text-center.no-margin
+      By continuing, you're confirming that you've read our
+      = link_to "terms & conditions", root_path
+      and
+      = link_to "privacy policy", root_path

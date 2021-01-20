@@ -1,0 +1,60 @@
+- content_for :body_class, "layout-boxed"
+
+- content_for :render_partial_sidebar do
+  = render partial: "layouts/shared/sidebar/people"
+
+%h1.text-light Top Up
+= "#{person_wallets_url(current_person)}"
+.row
+  .col-md-12
+    .panel.panel-default
+      .panel-heading
+        %h6.panel-title Request to deposit cash
+
+      .panel-body
+
+        = form_tag person_deposits_path do
+
+          .form-group
+            %label First Name:
+            = text_field_tag :first_name, current_person.first_name, placeholder: "Eg. John", class: "form-control input-lg"
+
+          .form-group
+            %label Last Name:
+            = text_field_tag :last_name, current_person.last_name, placeholder: "Eg. Doe", class: "form-control input-lg"
+
+
+          .form-group
+            %label Payment Description:
+            = text_field_tag :email, current_person.email, placeholder: "Eg. John", class: "form-control input-lg"
+
+          .form-group
+            %label Price
+            .input-group
+              %span.input-group-addon RM
+              = text_field_tag :amount, params[:amount], placeholder: "0.00", class: "form-control input-lg"
+            %span.help-block RM1.50 will be charge by billplz per every top up below RM100
+            %span.help-block Free of charge per every top up RM100 and above
+
+          .text-right
+            = button_tag type: "submit", class: "btn btn-primary btn-xlg" do
+              Top up
+
+
+/ .row
+/   .col-md-12
+/     .panel.panel-default
+/       .panel-heading
+/         %h6.panel-title Post billplz payment
+
+/       .panel-body
+
+/         = form_tag "/billplz/callback" do
+
+/           .form-group
+/             %label Billplz ID:
+/             = text_field_tag :id, session[:billplz_bill_id], placeholder: "Eg. 8y_hggmm", class: "form-control input-lg"
+
+/           .text-right
+/             = button_tag type: "submit", class: "btn btn-primary btn-xlg" do
+/               Post
